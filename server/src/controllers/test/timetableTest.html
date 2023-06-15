@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table,tr,td{
+        padding: 15px;
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+</style>
+<body>
+    <table>
+        <tr class="day">
+            <td></td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+        </tr>
+        <tr class="mon">
+            <td>mon</td>
+            <td class="_1">1</td>
+            <td class="_2">2</td>
+            <td class="_3">3</td>
+            <td class="_4" rowspan="6">Short break</td>
+            <td class="_5">5</td>
+            <td class="_6">6</td>
+            <td class="_7" rowspan="6">Lunch break</td>
+            <td class="_8">8</td>
+            <td class="_9">9</td>
+        </tr>
+        <tr class="tue">
+            <td>tue</td>
+            <td class="_1">1</td>
+            <td class="_2">2</td>
+            <td class="_3">3</td>            
+            <td class="_5">5</td>
+            <td class="_6">6</td>            
+            <td class="_8">8</td>
+            <td class="_9">9</td>
+        </tr>
+        <tr class="wed">
+            <td>wed</td>
+            <td class="_1">1</td>
+            <td class="_2">2</td>
+            <td class="_3">3</td>            
+            <td class="_5">5</td>
+            <td class="_6">6</td>            
+            <td class="_8">8</td>
+            <td class="_9">9</td>
+        </tr>
+        <tr class="thu">
+            <td>thu</td>
+            <td class="_1">1</td>
+            <td class="_2">2</td>
+            <td class="_3">3</td>            
+            <td class="_5">5</td>
+            <td class="_6">6</td>            
+            <td class="_8">8</td>
+            <td class="_9">9</td>
+        </tr>
+        <tr class="fri">
+            <td>fri</td>
+            <td class="_1">1</td>
+            <td class="_2">2</td>
+            <td class="_3">3</td>            
+            <td class="_5">5</td>
+            <td class="_6">6</td>            
+            <td class="_8">8</td>
+            <td class="_9">9</td>
+        </tr>
+        <tr class="sat">
+            <td>sat</td>
+            <td class="_1">1</td>
+            <td class="_2">2</td>
+            <td class="_3">3</td>            
+            <td class="_5">5</td>
+            <td class="_6">6</td>            
+            <td class="_8">8</td>
+            <td class="_9">9</td>
+        </tr>
+    </table>
+</body>
+<script>
+    const getTTdata = async () => {
+        const response = await fetch("http://localhost:4000/api/v1/admin/timetable/read");
+        const jsonData = await response.json();
+        return jsonData
+    }
+    const renderTT = async () => {
+        const ttData = await getTTdata();
+        const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        // now render
+        for (let day of days) {
+            // for each day get all the periods and render
+            let currDay = ttData.dataId[day];
+            let row = document.getElementsByClassName(day)[0];
+            for (let period in currDay) {
+                if(period === '_4' || period === '_7') 
+                    continue;
+                let column = row.getElementsByClassName(period)[0]
+                if (column)
+                    column.innerHTML = currDay[period];
+            }
+        }
+    }    
+</script>
+
+</html>

@@ -8,11 +8,11 @@ const courseSchema = mongoose.Schema({
         required: true
     },
     year: {
-        type: String,
+        type: Number,
         required: true
     },
     sem: {
-        type: String,
+        type: Number,
         required: true
     },
     courseCode: {
@@ -23,7 +23,7 @@ const courseSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    courseNameShort: {
+    courseShortName: {
         type: String,
         required: true
     },

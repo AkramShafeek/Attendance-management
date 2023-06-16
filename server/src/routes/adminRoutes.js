@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const emptyReqBodyValidator = require('../middlewares/emptyReqBodyValidator');
 
 // controllers
 const {
@@ -20,9 +21,21 @@ const {
     editTimetable,
     deleteTimetable,
 } = require('../controllers/admin/adminTimetableController');
+const {
+    createDept,
+    fetchDepts,
+    editDept,
+    deleteDept
+} = require('../controllers/admin/adminDeptController');
+
 
 
 // yet to include authentication middleware
+router.route('/dept/create').post(emptyReqBodyValidator, createDept);
+router.route('/dept/read').get(emptyReqBodyValidator, fetchDepts);
+router.route('/dept/update').put(emptyReqBodyValidator, editDept);
+router.route('/dept/delete').delete(emptyReqBodyValidator, deleteDept);
+
 router.route('/faculty/create').post(createFaculty);
 router.route('/faculty/read').get(fetchFaculties);
 router.route('/faculty/update').put(editFaculty);

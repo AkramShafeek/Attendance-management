@@ -18,21 +18,10 @@ const studentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  dept: {
-    type: String,
-    required: true,
-  },
-  year: {
-    type: Number,
-    required: true,
-  },
-  sem: {
-    type: Number,
-    required: true,
-  },
-  section: {
-    type: String,
-    required: true,
+  class: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'classes',
+    required: true
   },
   phone: [{
     type: String

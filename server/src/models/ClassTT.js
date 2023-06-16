@@ -1,23 +1,12 @@
 const mongoose = require('mongoose');
 
 const classTTSchema = mongoose.Schema({
-    dept: {
-        type: String,
-        required: true,
-    },
-    year: {
-        type: Number,
+    class: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'classes',
         required: true
     },
-    sem: {
-        type: Number,
-        required: true
-    },
-    section: {
-        type: String,
-        required: true
-    },
-    dataId: {
+    data: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'timetables',
         required: true,

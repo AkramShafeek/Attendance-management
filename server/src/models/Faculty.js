@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const ClassAllotment = require('./ClassAllotment');
 
 const facultySchema = mongoose.Schema({
   firstname: {
@@ -22,13 +23,18 @@ const facultySchema = mongoose.Schema({
     type: String
   }],
   dept: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'departments',
+    required: true
   },
   timetable: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'timetables'
   },
+  classAllotments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'classAllotments'
+  }],
   password: {
     type: String,
     required: true,
@@ -47,6 +53,18 @@ facultySchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 })
+
+facultySchema.pre('deleteOne', async function (next) {
+
+  const referenceError = 'Faculty is referenced and cannot be deleted';
+
+  // validate class allotment references
+  const existingClassAllotment = await ClassAllotment.findOne({ dept: this._id });
+  if (existingClassAllotment)
+    throw new Error(referenceError);
+
+})
+
 
 facultySchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);

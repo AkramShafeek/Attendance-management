@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const facultyTTSchema = mongoose.Schema({
-    facultyId: {
+    faculty: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'faculties',
         required: true,
     },
-    dataId: {
+    data: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'timetables',
         required: true,

@@ -1,5 +1,5 @@
-const Student = require('../models/Student');
-
+const Student = require('../../models/Student');
+const ClassAllotment = require('../../models/ClassAllotment');
 // add filters later
 const fetchStudents = async (req, res) => {
   const students = await Student.find();

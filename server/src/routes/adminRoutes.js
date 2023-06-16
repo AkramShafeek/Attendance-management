@@ -7,19 +7,19 @@ const {
     createFaculty,
     editFaculty,
     deleteFaculty,
-} = require('../controllers/adminFacultyControllers');
+} = require('../controllers/admin/adminFacultyControllers');
 const {
     fetchStudents,
     createStudent,
     editStudent,
     deleteStudent,
-} = require('../controllers/adminStudentControllers');
+} = require('../controllers/admin/adminStudentControllers');
 const {
     fetchTimetables,
     createTimetable,
     editTimetable,
     deleteTimetable,
-} = require('../controllers/adminTimetableController');
+} = require('../controllers/admin/adminTimetableController');
 
 
 // yet to include authentication middleware
@@ -47,6 +47,12 @@ router.route('/timetable/delete').delete(deleteTimetable);
  * step 2:
  * Approve students
  * ...yet to be designed
+ * 
+ * task now:
+ * CRUD dept
+ * CRUD course
+ * CRUD class
+ * CRUD classAllotment
  */
 
 module.exports = router;

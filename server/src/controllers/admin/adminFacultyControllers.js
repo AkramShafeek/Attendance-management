@@ -1,4 +1,4 @@
-const Faculty = require('../models/Faculty');
+const Faculty = require('../../models/Faculty');
 
 // add filters later
 const fetchFaculties = async (req, res) => {

@@ -1,6 +1,6 @@
-const Timetable = require('../models/TimetableData');
-const FacultyTT = require('../models/FacultyTT');
-const ClassTT = require('../models/ClassTT');
+const Timetable = require('../../models/TimetableData');
+const FacultyTT = require('../../models/FacultyTT');
+const ClassTT = require('../../models/ClassTT');
 
 // add filters later
 const fetchTimetables = async (req, res) => {

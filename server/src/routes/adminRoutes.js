@@ -27,6 +27,18 @@ const {
     editDept,
     deleteDept
 } = require('../controllers/admin/adminDeptController');
+const {
+    fetchAttendanceStatuses,
+    createAttendanceStatus,
+    editAttendanceStatus,
+    deleteAttendanceStatus,
+} = require('../controllers/admin/adminAttendanceStatusController');
+const {
+    fetchAttendanceRecords,
+    createAttendanceRecord,
+    editAttendanceRecord,
+    deleteAttendanceRecord,
+} = require('../controllers/admin/adminAttendanceRecordController');
 
 
 
@@ -50,6 +62,16 @@ router.route('/timetable/create').post(createTimetable);
 router.route('/timetable/read').get(fetchTimetables);
 router.route('/timetable/update').put(editTimetable);
 router.route('/timetable/delete').delete(deleteTimetable);
+
+router.route('/attendancestatus/create').post(emptyReqBodyValidator, createAttendanceStatus);
+router.route('/attendancestatus/read').get(emptyReqBodyValidator, fetchAttendanceStatuses);
+router.route('/attendancestatus/update').put(emptyReqBodyValidator, editAttendanceStatus);
+router.route('/attendancestatus/delete').delete(emptyReqBodyValidator, deleteAttendanceStatus);
+
+router.route('/attendancerecord/create').post(emptyReqBodyValidator, createAttendanceRecord);
+router.route('/attendancerecord/read').get(emptyReqBodyValidator, fetchAttendanceRecords);
+router.route('/attendancerecord/update').put(emptyReqBodyValidator, editAttendanceRecord);
+router.route('/attendancerecord/delete').delete(emptyReqBodyValidator, deleteAttendanceRecord);
 
 /**
  * What can admin do?

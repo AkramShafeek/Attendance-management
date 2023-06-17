@@ -18,12 +18,12 @@ const departmentSchema = mongoose.Schema({
 departmentSchema.pre('deleteOne', async function (next) {
     const referenceError = 'Dept is referenced and cannot be deleted';
     const doc = await Dept.findOne(this.getFilter());
-    
-    if(!doc)
+
+    if (!doc)
         throw new Error("Dept doesn't exist");
+
     // validate course references
-    const existingCourse = await Course.findOne({ dept: doc._id });
-    console.log(existingCourse);
+    const existingCourse = await Course.findOne({ dept: doc._id });    
     if (existingCourse)
         throw new Error(referenceError);
 

@@ -17,7 +17,7 @@ const connectToMongo = require('./database/connectToMongo');
 const adminRouter = require('./routes/adminRoutes');
 
 // head middlewares
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // routes config

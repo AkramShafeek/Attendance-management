@@ -4,7 +4,7 @@ const ClassTT = require('../../models/ClassTT');
 
 // add filters later
 const fetchTimetables = async (req, res) => {
-  const timetables = await ClassTT.findOne().populate('dataId');
+  const timetables = await ClassTT.findOne().populate('data');
   res.status(200).send(timetables);
 }
 

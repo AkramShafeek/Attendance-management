@@ -1,0 +1,24 @@
+.body {
+  background-color: aliceblue;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.f-between {
+  justify-content: space-between;
+}
+
+.pad-1 {
+  padding: 10px;
+}
+
+.gap-1 {
+  gap: 10px;
+}

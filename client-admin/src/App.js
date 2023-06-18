@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Authentication from "./pages/Authentication";
+import Admin from "./pages/Admin";
+import Calendar from './components/Calendar';
+import Database from './components/Database';
+import Class from './components/Class';
+import Approval from './components/Approval';
+import Timetable from './components/Timetable';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Authentication />} />
+        <Route path="/admin" element={<Admin />}>
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="database" element={<Database />} />
+          <Route path="class" element={<Class />} />
+          <Route path="timetable" element={<Timetable />} />
+          <Route path="approval" element={<Approval />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

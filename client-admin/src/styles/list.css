@@ -1,0 +1,27 @@
+.list-item {
+  height: 50px;  
+}
+
+.header {
+  height: 80px;
+}
+
+table,tr,td{
+  border: none;
+  border-collapse: collapse;
+}
+tr{
+  border-radius: 5px;
+}
+td {
+  padding: 5px 10px;
+  width: fit-content;
+}
+td:first-child{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+td:last-child{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

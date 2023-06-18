@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Authentication from "./pages/Authentication";
 import Admin from "./pages/Admin";
 import Calendar from './components/Calendar';
@@ -7,7 +7,7 @@ import Class from './components/Class';
 import Approval from './components/Approval';
 import Timetable from './components/Timetable';
 
-function App() {
+function App() {  
   return (
     <BrowserRouter>
       <Routes>

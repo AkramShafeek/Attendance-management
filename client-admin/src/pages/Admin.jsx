@@ -12,7 +12,7 @@ const Admin = () => {
         <Sidenav />
         <Divider sx={{
           height: '98%',
-          width: '3px', 
+          width: '2px', 
           backgroundColor: 'rgb(230, 230, 230)',        
         }}></Divider>
         <Outlet />

@@ -7,9 +7,13 @@ import StorageIcon from '@mui/icons-material/Storage';
 import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMenu } from '../../redux/features/menuSlice';
 
 const Sidenav = () => {
-  const [selectedMenu, setSelectedMenu] = useState('Calendar');
+  // const [selectedMenu, setSelectedMenu] = useState('Calendar');
+  const selectedMenu = useSelector((store) => store.menu.selectedMenu);
+  const dispatch = useDispatch();
   const menu = [
     {
       name: 'Calendar',
@@ -38,8 +42,8 @@ const Sidenav = () => {
     },
   ];
 
-  const selectMenu = (element) => {
-    setSelectedMenu(element);
+  const dispatchMenuSelection = (element) => {
+    dispatch(selectMenu(element));
   }
 
   return (
@@ -47,14 +51,17 @@ const Sidenav = () => {
       <Stack spacing={3} sx={{ marginTop: '30px' }}>
         {menu.map((element, index) => {
           return (
-            <NavLink to={element.link} style={{textDecoration: 'none'}}>
-              <ListItemButton key={index} elevation={0} sx={{
+            <NavLink key={index} to={element.link} style={{ textDecoration: 'none' }}>
+              <ListItemButton elevation={0} sx={{
                 backgroundColor: selectedMenu === element.name ? "#72e095" : "white",
                 borderRadius: '6px',
                 '&:hover': {
                   backgroundColor: selectedMenu === element.name ? "#72e095" : "null",
+                },
+                "& .MuiTouchRipple-child": {
+                  backgroundColor: 'green'
                 }
-              }} onClick={() => selectedMenu !== element.name && selectMenu(element.name)}>
+              }} onClick={() => selectedMenu !== element.name && dispatchMenuSelection(element.name)}>
                 <Icon style={{ color: selectedMenu === element.name ? "white" : "#919191" }}>
                   {element.icon}
                 </Icon>

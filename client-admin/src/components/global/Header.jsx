@@ -3,7 +3,7 @@ import '../../styles/index.css';
 
 const Header = () => {
   return (
-    <div className="flex-row f-between pad-1" style={{ 'backgroundColor': "beige" }}>
+    <div className="flex-row f-between pad-1" style={{ 'backgroundColor': "rgb(250, 250, 250)" }}>
       <Typography>
         ADMIN PANEL
       </Typography>

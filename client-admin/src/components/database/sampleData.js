@@ -78,8 +78,8 @@ export const students = [
     "phone": [
       "8095825227",
       "9886465074"
-    ],    
-    "avatar": "https://hips.hearstapps.com/hmg-prod/images/batman-scoial-1641471727.jpg?crop=0.291xw:0.580xh;0.640xw,0&resize=1200:*",
+    ],
+    "avatar": "https://images.hindustantimes.com/img/2022/01/20/550x309/Robert_Pattinson_1642681700840_1642681719067.jpg",
     "__v": 0
   },
   {
@@ -89,7 +89,7 @@ export const students = [
     "firstname": "Haaid",
     "lastname": "Qazi",
     "usn": "1BM21CS070",
-    "email": "akram.cs21@bmsce.ac.in",
+    "email": "haaid.cs21@bmsce.ac.in",
     "dept": "CSE",
     "year": 2,
     "sem": 4,
@@ -97,7 +97,7 @@ export const students = [
     "phone": [
       "8095825227",
       "9886465074"
-    ],    
+    ],
     "avatar": "https://parimatchnews.com/wp-content/uploads/2021/01/Screenshot_1-634x640.png",
     "__v": 0
   },
@@ -105,10 +105,10 @@ export const students = [
     "_id": {
       "$oid": "648a1770b199fc6d49e85e33"
     },
-    "firstname": "Aisha",
-    "lastname": "Chesti",
-    "usn": "1BM21CS010",
-    "email": "akram.cs21@bmsce.ac.in",
+    "firstname": "Adnan",
+    "lastname": "Anwar",
+    "usn": "1BM21CS008",
+    "email": "adnan.cs21@bmsce.ac.in",
     "dept": "CSE",
     "year": 2,
     "sem": 4,
@@ -116,7 +116,7 @@ export const students = [
     "phone": [
       "8095825227",
       "9886465074"
-    ],    
+    ],
     "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTySvlsIgOJAtfh9vXZyRdVxPoMeef3lnjfQHDNz8tMgg&usqp=CAU&ec=48665701",
     "__v": 0
   }

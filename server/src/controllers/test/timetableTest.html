@@ -100,11 +100,12 @@
     }
     const renderTT = async () => {
         const ttData = await getTTdata();
+        console.log(ttData)
         const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
         // now render
         for (let day of days) {
             // for each day get all the periods and render
-            let currDay = ttData.dataId[day];
+            let currDay = ttData.data[day];
             let row = document.getElementsByClassName(day)[0];
             for (let period in currDay) {
                 if(period === '_4' || period === '_7') 

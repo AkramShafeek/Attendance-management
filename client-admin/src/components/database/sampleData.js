@@ -105,10 +105,10 @@ export const students = [
     "_id": {
       "$oid": "648a1770b199fc6d49e85e33"
     },
-    "firstname": "Adnan",
-    "lastname": "Anwar",
-    "usn": "1BM21CS008",
-    "email": "adnan.cs21@bmsce.ac.in",
+    "firstname": "Aisha",
+    "lastname": "Chesti",
+    "usn": "1BM21CS0010",
+    "email": "aisha.cs21@bmsce.ac.in",
     "dept": "CSE",
     "year": 2,
     "sem": 4,

@@ -1,8 +1,6 @@
 import { Box, Icon, IconButton, TextField, Typography } from "@mui/material";
 import { depts } from "./sampleData";
-import '../../styles/list.css';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import DeptListItem from "../utils/DeptListItem";
+import DeptListItem from "./list renderers/DeptListItem";
 
 const Dept = () => {
   return (
@@ -12,19 +10,19 @@ const Dept = () => {
       </Box>
       <table>
         <tbody>
-          <tr className='list-item' style={{ backgroundColor: "#72e095" }}>
+          <tr className='list-item header'>
             <td>
-              <Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>
                 ID
               </Typography>
             </td>
             <td>
-              <Typography>
+              <Typography sx={{ fontWeight: 'bold' }}>
                 Department
               </Typography>
             </td>
-            <td>
-              <Typography sx={{ marginLeft: '10px' }}>
+            <td style={{ marginRight: '10px', textAlign: 'right' }}>
+              <Typography sx={{ fontWeight: 'bold', marginRight: '15px' }}>
                 Action
               </Typography>
             </td>

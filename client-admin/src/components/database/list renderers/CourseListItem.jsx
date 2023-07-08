@@ -1,8 +1,7 @@
 import { Box, Icon, IconButton, Typography } from "@mui/material";
-import '../../styles/list.css';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { depts } from "../database/sampleData";
+import { depts } from "../sampleData";
 
 const getDept = (deptId) => {
   for (let dept of depts)
@@ -41,7 +40,7 @@ const CourseListItem = (props) => {
             {course.sem}
           </Typography>
         </td>
-        <td>
+        <td style={{ marginRight: '10px', textAlign: 'right' }}>
           <IconButton>
             <Icon>
               <EditRoundedIcon color="primary" />

@@ -1,5 +1,4 @@
 import { Box, Icon, IconButton, Typography } from "@mui/material";
-import '../../styles/list.css';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -8,18 +7,18 @@ const DeptListItem = (props) => {
 
   return (
     list.map((dept, index) =>
-      <tr key={index} className="list-item" style={{ backgroundColor: index % 2 !== 0 ? 'aliceblue' : 'transparent' }}>
+      <tr key={index} className="list-item" style={{ backgroundColor: index % 2 === 0 ? 'rgb(250,250,250)' : 'transparent' }}>
         <td>
-          <Typography>
+          <Typography sx={{ fontSize: 'small' }}>
             {dept.deptId}
           </Typography>
         </td>
         <td>
-          <Typography>
+          <Typography sx={{ fontSize: 'small' }}>
             {dept.deptName}
           </Typography>
         </td>
-        <td>
+        <td style={{ marginRight: '10px', textAlign: 'right' }}>
           <IconButton>
             <Icon>
               <EditRoundedIcon color="primary" />

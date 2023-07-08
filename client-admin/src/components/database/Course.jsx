@@ -1,7 +1,6 @@
 import { Box, Icon, IconButton, TextField, Typography } from "@mui/material";
 import { courses } from "./sampleData";
-import '../../styles/list.css';
-import CourseListItem from "../utils/CourseListItem";
+import CourseListItem from "./list renderers/CourseListItem";
 
 const Course = () => {
   return (
@@ -36,8 +35,8 @@ const Course = () => {
               Sem
             </Typography>
           </td>
-          <td>
-            <Typography sx={{ marginLeft: '10px', minWidth: '100px', fontWeight: 'bold' }}>
+          <td style={{ marginRight: '10px', textAlign: 'right' }}>
+            <Typography sx={{ minWidth: '100px', fontWeight: 'bold', marginRight: '15px' }}>
               Action
             </Typography>
           </td>

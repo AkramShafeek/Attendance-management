@@ -59,7 +59,7 @@ const Sidenav = () => {
                   backgroundColor: selectedMenu === element.name ? "#72e095" : "null",
                 },
                 "& .MuiTouchRipple-child": {
-                  backgroundColor: 'green'
+                  backgroundColor: 'none'
                 }
               }} onClick={() => selectedMenu !== element.name && dispatchMenuSelection(element.name)}>
                 <Icon style={{ color: selectedMenu === element.name ? "white" : "#919191" }}>

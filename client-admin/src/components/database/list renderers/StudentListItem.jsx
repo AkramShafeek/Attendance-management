@@ -1,10 +1,10 @@
 import { Avatar, Box, Icon, IconButton, Typography } from "@mui/material";
-import '../../styles/list.css';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { depts } from "../database/sampleData";
+import { depts } from "../sampleData";
 import { useDispatch } from "react-redux";
-import { selectStudent } from "../../redux/features/studentSlice";
+import { selectStudent } from "../../../redux/features/studentSlice";
+// import { selectStudent } from "../../redux/features/studentSlice";
 
 const getDept = (deptId) => {
   for (let dept of depts)
@@ -28,9 +28,7 @@ const StudentListItem = (props) => {
         style={{ backgroundColor: index % 2 === 0 ? 'rgb(250,250,250)' : 'transparent' }}
         onClick={() => handleClick(student)}>
         <td>
-          <div className="pad-1">
-            <Avatar src={student.avatar}></Avatar>
-          </div>
+          <Avatar src={student.avatar}></Avatar>
         </td>
         <td>
           <Typography sx={{ fontSize: 'small' }}>
@@ -62,7 +60,7 @@ const StudentListItem = (props) => {
             {student.section}
           </Typography>
         </td>
-        <td>
+        <td style={{ marginRight: '10px', textAlign: 'right' }}>
           <IconButton>
             <Icon>
               <EditRoundedIcon color="primary" />

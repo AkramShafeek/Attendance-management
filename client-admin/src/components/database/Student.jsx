@@ -1,8 +1,7 @@
 import { Box, Icon, IconButton, TextField, Typography } from "@mui/material";
 import { students } from "./sampleData";
-import '../../styles/list.css';
-import CourseListItem from "../utils/CourseListItem";
-import StudentListItem from "../utils/StudentListItem";
+import CourseListItem from "./list renderers/CourseListItem";
+import StudentListItem from "./list renderers/StudentListItem";
 
 const Student = () => {
   return (
@@ -47,8 +46,8 @@ const Student = () => {
               Section
             </Typography>
           </td>
-          <td>
-            <Typography sx={{ marginLeft: '10px', minWidth: '100px', fontWeight: 'bold' }}>
+          <td style={{ marginRight: '40px', textAlign: 'right' }}>
+            <Typography sx={{ minWidth: '100px', fontWeight: 'bold', marginRight: '15px' }}>
               Action
             </Typography>
           </td>

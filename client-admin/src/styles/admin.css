@@ -5,7 +5,7 @@
 }
 
 .content-container{
-  height: 100%;
+  min-height: 90%;
 }
 
 .flex-row {
@@ -36,11 +36,13 @@
 }
 
 .main {
-  width: 75%;
-  background-color: white;
+  flex: 1 0 70%;
+  background-color: white;  
+  padding: 5px 15px;
+  box-sizing: border-box;
 }
 .sub {
-  width: 25%;
+  flex: 1 0 20%;
   background-color: white;
 }
 

@@ -2,6 +2,7 @@ import { Box, Icon, IconButton, Typography } from "@mui/material";
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { depts } from "../sampleData";
+import { useTheme } from "@emotion/react";
 
 const getDept = (deptId) => {
   for (let dept of depts)
@@ -11,39 +12,40 @@ const getDept = (deptId) => {
 
 const CourseListItem = (props) => {
   const { list } = props;
-
+  const { palette } = useTheme();
   return (
     list.map((course, index) =>
-      <tr className="list-item" style={{ backgroundColor: index % 2 === 0 ? 'rgb(250,250,250)' : 'transparent' }}>
+      <tr className="list-item"
+        style={{ backgroundColor: index % 2 === 0 ? palette.neutral.light : 'transparent' }}>
         <td>
-          <Typography sx={{fontSize: 'small'}}>
+          <Typography sx={{ fontSize: 'small' }}>
             {course.courseCode}
           </Typography>
         </td>
         <td>
-          <Typography sx={{fontSize: 'small'}}>
+          <Typography sx={{ fontSize: 'small' }}>
             {course.courseName}
           </Typography>
         </td>
         <td>
-          <Typography sx={{fontSize: 'small'}}>
+          <Typography sx={{ fontSize: 'small' }}>
             {getDept(course.dept.$oid)}
           </Typography>
         </td>
         <td>
-          <Typography sx={{fontSize: 'small'}}>
+          <Typography sx={{ fontSize: 'small' }}>
             {course.year}
           </Typography>
         </td>
         <td>
-          <Typography sx={{fontSize: 'small'}}>
+          <Typography sx={{ fontSize: 'small' }}>
             {course.sem}
           </Typography>
         </td>
         <td style={{ marginRight: '10px', textAlign: 'right' }}>
           <IconButton>
             <Icon>
-              <EditRoundedIcon color="primary" />
+              <EditRoundedIcon color="secondary" />
             </Icon>
           </IconButton>
           <IconButton>

@@ -1,9 +1,9 @@
 import { Avatar, Box, Icon, IconButton, Typography } from "@mui/material";
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { depts } from "../sampleData";
+import { depts, faculty } from "../sampleData";
 import { useDispatch } from "react-redux";
-import { selectStudent, openEditModal } from "../../../redux/features/studentSlice";
+import { selectFaculty, openEditModal } from "../../../redux/features/facultySlice";
 import { useTheme } from "@emotion/react";
 // import { selectStudent } from "../../redux/features/studentSlice";
 
@@ -14,14 +14,14 @@ const getDept = (deptId) => {
 }
 
 
-const StudentListItem = (props) => {
+const FacultyListItem = (props) => {
   const dispatch = useDispatch();
 
   const { list } = props;
   const { palette } = useTheme();
 
-  const handleSelectClick = (student) => {
-    dispatch(selectStudent(student));
+  const handleSelectClick = (faculty) => {
+    dispatch(selectFaculty(faculty));
   }
 
   const handleEditClick = () => {
@@ -29,41 +29,32 @@ const StudentListItem = (props) => {
     dispatch(openEditModal());
   }
 
-  const getBackgroundColor = (index) => {
-    
-  }
-
   return (
-    list.map((student, index) =>
+    list.map((faculty, index) =>
       <tr className="list-item"
-        onClick={() => handleSelectClick(student)}
+        onClick={() => handleSelectClick(faculty)}
         style={{ backgroundColor: index % 2 === 0 ? palette.neutral.light : 'transparent' }}>
         <td>
-          <Avatar src={student.avatar}></Avatar>
+          <Avatar src={faculty.avatar}></Avatar>
         </td>
         <td>
           <Typography sx={{ fontSize: 'small' }}>
-            {student.usn}
+            {faculty.empid}
           </Typography>
         </td>
         <td>
           <Typography sx={{ fontSize: 'small' }}>
-            {student.firstname + " " + student.lastname}
+            {faculty.firstname + " " + faculty.lastname}
           </Typography>
         </td>
         <td>
           <Typography sx={{ fontSize: 'small' }}>
-            {student.dept}
+            {faculty.dept}
           </Typography>
         </td>
         <td>
           <Typography sx={{ fontSize: 'small', textAlign: 'center' }}>
-            {student.sem}
-          </Typography>
-        </td>
-        <td>
-          <Typography sx={{ fontSize: 'small', textAlign: 'center' }}>
-            {student.section}
+            {faculty.email}
           </Typography>
         </td>
         <td style={{ marginRight: '10px', textAlign: 'right' }}>
@@ -82,4 +73,4 @@ const StudentListItem = (props) => {
   )
 }
 
-export default StudentListItem;
+export default FacultyListItem;

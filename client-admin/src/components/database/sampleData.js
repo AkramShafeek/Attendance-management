@@ -121,3 +121,30 @@ export const students = [
     "__v": 0
   }
 ]
+
+export const faculty = [
+  {
+    "firstname": "Selva",
+    "lastname": "Kumar",
+    "empid": "sks123",
+    "email": "selvakumar.cse@bmsce.ac.in",
+    "phone": [
+      "9873495367"
+    ],
+    "dept": "CSE",
+    "avatar": "user-avatar.png",
+    "__v": 0
+  },
+  {
+    "firstname": "Nandini",
+    "lastname": "Vineeth",
+    "empid": "ndv123",
+    "email": "nandinivineeth.cse@bmsce.ac.in",
+    "phone": [
+      "8638465367"
+    ],
+    "dept": "CSE",
+    "avatar": "user-avatar.png",
+    "__v": 0
+  }
+]

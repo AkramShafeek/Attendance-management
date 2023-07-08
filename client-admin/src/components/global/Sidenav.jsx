@@ -9,10 +9,12 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMenu } from '../../redux/features/menuSlice';
+import { useTheme } from '@emotion/react';
 
 const Sidenav = () => {
   // const [selectedMenu, setSelectedMenu] = useState('Calendar');
   const selectedMenu = useSelector((store) => store.menu.selectedMenu);
+  const { palette } = useTheme();
   const dispatch = useDispatch();
   const menu = [
     {
@@ -47,13 +49,13 @@ const Sidenav = () => {
   }
 
   return (
-    <div className="sidebar">
+    <div className="sidebar" style={{backgroundColor: palette.background.alt,borderRadius: '10px'}}>
       <Stack spacing={3} sx={{ marginTop: '30px' }}>
         {menu.map((element, index) => {
           return (
             <NavLink key={index} to={element.link} style={{ textDecoration: 'none' }}>
               <ListItemButton elevation={0} sx={{
-                backgroundColor: selectedMenu === element.name ? "#72e095" : "white",
+                backgroundColor: selectedMenu === element.name ? "#72e095" : "transparent",
                 borderRadius: '6px',
                 '&:hover': {
                   backgroundColor: selectedMenu === element.name ? "#72e095" : "null",

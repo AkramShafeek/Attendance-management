@@ -1,13 +1,15 @@
 import { Box, Icon, IconButton, Typography } from "@mui/material";
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTheme } from "@emotion/react";
 
 const DeptListItem = (props) => {
   const { list } = props;
-
+  const { palette } = useTheme();
   return (
     list.map((dept, index) =>
-      <tr key={index} className="list-item" style={{ backgroundColor: index % 2 === 0 ? 'rgb(250,250,250)' : 'transparent' }}>
+      <tr key={index} className="list-item"
+        style={{ backgroundColor: index % 2 === 0 ? palette.neutral.light : 'transparent' }}>
         <td>
           <Typography sx={{ fontSize: 'small' }}>
             {dept.deptId}
@@ -21,7 +23,7 @@ const DeptListItem = (props) => {
         <td style={{ marginRight: '10px', textAlign: 'right' }}>
           <IconButton>
             <Icon>
-              <EditRoundedIcon color="primary" />
+              <EditRoundedIcon color="secondary" />
             </Icon>
           </IconButton>
           <IconButton>

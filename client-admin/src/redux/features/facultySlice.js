@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedStudent: null,
+  selectedFaculty: null,
   isOpenEditModal: false,
 }
 
-const studentSlice = createSlice({
-  name: 'student',
+const facultySlice = createSlice({
+  name: 'faculty',
   initialState,
   reducers: {
-    selectStudent: (state, action) => {
-      state.selectedStudent = action.payload;
+    selectFaculty: (state, action) => {
+      state.selectedFaculty = action.payload;
     },
     openEditModal: (state, action) => {
       state.isOpenEditModal = true;
@@ -21,5 +21,5 @@ const studentSlice = createSlice({
   }
 });
 
-export const { selectStudent, openEditModal, closeEditModal } = studentSlice.actions;
-export default studentSlice.reducer;
+export const { selectFaculty, openEditModal, closeEditModal } = facultySlice.actions;
+export default facultySlice.reducer;

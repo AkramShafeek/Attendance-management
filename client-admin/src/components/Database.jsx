@@ -7,18 +7,28 @@ import Course from "./database/Course";
 import Student from "./database/Student";
 import Faculty from "./database/Faculty";
 import StudentProfile from "./database/StudentProfile";
+import FacultyProfile from "./database/FacultyProfile";
+import { useTheme } from "@emotion/react";
 
 const Database = () => {
   const [tabValue, setTabValue] = useState(0);
 
   const dispatch = useDispatch();
+  const { palette } = useTheme();
 
   useEffect(() => {
     dispatch(selectMenu('Database'));
   }, []);
   return (
     <Box className="content flex-row gap-1">
-      <Box className="main">
+      <Box className="main" sx={{
+        height: '100%',
+        position: 'relative',
+        backgroundColor: palette.background.alt,
+        // borderLeft: '1px solid ' + palette.neutral.light,
+        // borderRight: '1px solid ' + palette.neutral.light,        
+        borderRadius: '10px'
+      }}>
         <Box>
           <Tabs onChange={(event, value) => setTabValue(value)} value={tabValue}>
             <Tab label="Dept" value={0}></Tab>
@@ -35,13 +45,14 @@ const Database = () => {
           {tabValue === 3 && <Student />}
         </Box>
       </Box>
-      <Divider sx={{
+      {/* <Divider sx={{
         height: '98%',
         width: '2px',
         backgroundColor: 'rgb(230, 230, 230)',
-      }}></Divider>
-      <Box className="sub">
-        <StudentProfile></StudentProfile>
+      }}></Divider> */}
+      <Box className="sub" sx={{ backgroundColor: palette.background.alt,borderRadius: '10px' }}>
+        {tabValue === 2 && <FacultyProfile />}
+        {tabValue === 3 && <StudentProfile />}
       </Box>
     </Box>
   );

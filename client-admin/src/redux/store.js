@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import menuReducer from "./features/menuSlice";
 import studentReducer from "./features/studentSlice";
+import facultyReducer from "./features/facultySlice";
+import modeReducer from "./features/themeSlice"
 import { combineReducers } from "@reduxjs/toolkit";
 import {
   persistReducer,
@@ -17,6 +19,8 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 const reducers = combineReducers({
   menu: menuReducer,
   student: studentReducer,
+  faculty: facultyReducer,
+  mode: modeReducer
 });
 
 const persistConfig = { key: "root", storage, stateReconciler: autoMergeLevel2 };

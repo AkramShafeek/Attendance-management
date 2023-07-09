@@ -53,17 +53,17 @@ const StudentListItem = (props) => {
         </td>
         <td>
           <Typography sx={{ fontSize: 'small' }}>
-            {student.dept}
+            {student.class && student.class.dept && student.class.dept.deptId}
           </Typography>
         </td>
         <td>
           <Typography sx={{ fontSize: 'small', textAlign: 'center' }}>
-            {student.sem}
+            {student.class && student.class.sem}
           </Typography>
         </td>
         <td>
           <Typography sx={{ fontSize: 'small', textAlign: 'center' }}>
-            {student.section}
+            {student.class && student.class.section}
           </Typography>
         </td>
         <td style={{ marginRight: '10px', textAlign: 'right' }}>
@@ -83,3 +83,28 @@ const StudentListItem = (props) => {
 }
 
 export default StudentListItem;
+
+// {
+//   "_id": "64aa90b1db521d49a8194b08",
+//   "firstname": "Akram",
+//   "lastname": "Shafeek",
+//   "usn": "1BM21CS013",
+//   "email": "akram.cs21@bmsce.ac.in",
+//   "class": {
+//     "_id": "648df6674ec88b250cf70de3",
+//     "dept": {
+//       "_id": "648cc0e9b6edc9fb04c08404",
+//       "deptName": "Computer Science and Engineering",
+//       "deptId": "CSE",
+//       "__v": 0
+//     },
+//     "year": "2",
+//     "sem": "4",
+//     "section": "A"
+//   },
+//   "phone": [
+//     "8095825227"
+//   ],
+//   "avatar": "https://images.hindustantimes.com/img/2022/01/20/550x309/Robert_Pattinson_1642681700840_1642681719067.jpg",
+//   "__v": 0
+// }

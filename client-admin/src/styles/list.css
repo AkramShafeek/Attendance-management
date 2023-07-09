@@ -24,7 +24,6 @@ td {
   border: none;
   border-collapse: collapse;
 }
-
 tr {
   border-radius: 5px;
   min-height: 70px;
@@ -46,4 +45,7 @@ td:first-child {
 td:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+table.align-cell-text-left td {
+  text-align: left;
 }

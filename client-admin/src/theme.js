@@ -11,6 +11,7 @@ export const colorTokens = {
     500: "#666666",
     600: "#4D4D4D",
     700: "#333333",
+    750: "#222222",
     800: "#1A1A1A",
     900: "#0A0A0A",
     1000: "#000000",
@@ -28,16 +29,16 @@ export const colorTokens = {
     900: "#00782f",
   },
   secondary: {
-    50: "#eee7f9",
-    100: "#d2c3f1",
-    200: "#b49be8",
-    300: "#9572e0",
-    400: "#7c52d9",
-    500: "#6234ce",
-    600: "#582fc8",
-    700: "#4827bf",
-    800: "#3922b7",
-    900: "#1a15a8",
+    50: "#e7f2fe",
+    100: "#c6dffe",
+    200: "#a4cbfd",
+    300: "#85b7fb",
+    400: "#74a6f9",
+    500: "#6b97f5",
+    600: "#6689e6",
+    700: "#5f76d2",
+    800: "#5965bf",
+    900: "#4e469d ",
   },
 };
 
@@ -54,12 +55,17 @@ export const themeSettings = (mode) => {
             main: colorTokens.primary[500],
             light: colorTokens.primary[100],
           },
+          secondary: {
+            dark: colorTokens.secondary[700],
+            main: colorTokens.secondary[600],
+            light: colorTokens.secondary[50],
+          },
           neutral: {
             dark: colorTokens.grey[100],
             main: colorTokens.grey[200],
             mediumMain: colorTokens.grey[300],
             medium: colorTokens.grey[400],
-            light: colorTokens.grey[700],
+            light: colorTokens.grey[750],
           },
           background: {
             default: colorTokens.grey[900],
@@ -75,7 +81,7 @@ export const themeSettings = (mode) => {
           },
           secondary: {
             dark: colorTokens.secondary[700],
-            main: colorTokens.secondary[300],
+            main: colorTokens.secondary[400],
             light: colorTokens.secondary[50],
           },
           neutral: {
@@ -92,30 +98,30 @@ export const themeSettings = (mode) => {
         }),
     },
     typography: {
-      fontFamily: ["Rubik", "sans-serif"].join(","),
+      fontFamily: ["Lato", "sans-serif"].join(","),
       fontSize: 12,
       h1: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["Lato", "sans-serif"].join(","),
         fontSize: 40,
       },
       h2: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["Lato", "sans-serif"].join(","),
         fontSize: 32,
       },
       h3: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["Lato", "sans-serif"].join(","),
         fontSize: 24,
       },
       h4: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["Lato", "sans-serif"].join(","),
         fontSize: 20,
       },
       h5: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["Lato", "sans-serif"].join(","),
         fontSize: 16,
       },
       h6: {
-        fontFamily: ["Rubik", "sans-serif"].join(","),
+        fontFamily: ["Lato", "sans-serif"].join(","),
         fontSize: 14,
       },
     },

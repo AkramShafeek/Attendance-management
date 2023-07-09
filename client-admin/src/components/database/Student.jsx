@@ -2,7 +2,7 @@ import { Box, Icon, IconButton, TextField, Typography, Modal, Button } from "@mu
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { students } from "./sampleData";
-import CourseListItem from "./list renderers/CourseListItem";
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import StudentListItem from "./list renderers/StudentListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -10,6 +10,7 @@ import { useState } from "react";
 import { closeEditModal } from "../../redux/features/studentSlice";
 import StudentCreateModal from "./modals/StudentCreateModal";
 import StudentEditModal from "./modals/StudentEditModal";
+import { fetchStudentsApi } from "../../apis/database api/student";
 
 
 
@@ -18,6 +19,7 @@ const Student = () => {
   const selectedStudent = useSelector((store) => store.student.selectedStudent);
   const isOpenEditModal = useSelector((store) => store.student.isOpenEditModal);
   const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
+  const [studentsData, setStudentsData] = useState([]);
   const dispatch = useDispatch();
 
   const handleEditModalClose = (event, reason) => {
@@ -31,6 +33,16 @@ const Student = () => {
       return;
     setIsOpenCreateModal(false);
   }
+
+  const fetchStudents = async () => {
+    const response = await fetchStudentsApi();
+    setStudentsData(response.data);
+    console.log(response);
+  }
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
 
   const modalStyle = {
     position: 'absolute',
@@ -58,8 +70,10 @@ const Student = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle} className="flex-column gap-2">
-          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
-            <Button onClick={handleEditModalClose}>close</Button>
+          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>            
+            <IconButton onClick={handleEditModalClose}>
+              <CloseRoundedIcon />
+            </IconButton>
           </div>
           <StudentEditModal selectedStudent={selectedStudent} handleClose={handleEditModalClose} />
         </Box>
@@ -115,7 +129,7 @@ const Student = () => {
             </Typography>
           </td>
         </tr>
-        <StudentListItem list={students} />
+        <StudentListItem list={studentsData} />
       </table>
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => setIsOpenCreateModal(true)}>
         <AddIcon />

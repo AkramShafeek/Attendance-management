@@ -66,7 +66,7 @@ const Header = () => {
         <AdminPanelSettingsIcon sx={{ width: '30px', height: '30px' }} color="primary"/>
       </div>
       <div className="flex-row align-items-center gap-2">
-        <MaterialUISwitch onChange={() => dispatch(toggleMode())} defaultChecked={mode === 'dark'} />
+        <MaterialUISwitch onChange={() => dispatch(toggleMode())} defaultChecked={mode} />
         < Avatar />
       </div>
     </div >

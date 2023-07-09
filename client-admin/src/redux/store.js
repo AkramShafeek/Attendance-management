@@ -2,7 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import menuReducer from "./features/menuSlice";
 import studentReducer from "./features/studentSlice";
 import facultyReducer from "./features/facultySlice";
-import modeReducer from "./features/themeSlice"
+import modeReducer from "./features/themeSlice";
+import deptReducer from "./features/deptSlice";
+
+
 import { combineReducers } from "@reduxjs/toolkit";
 import {
   persistReducer,
@@ -20,6 +23,7 @@ const reducers = combineReducers({
   menu: menuReducer,
   student: studentReducer,
   faculty: facultyReducer,
+  dept: deptReducer,
   mode: modeReducer
 });
 

@@ -1,6 +1,11 @@
-import { Avatar, Button, TextField, Typography, styled } from "@mui/material";
+import { Avatar, Button, Divider, MenuItem, Select, TextField, Typography, styled } from "@mui/material";
 import { Form, Formik, useField } from "formik";
+import { useState } from "react";
 import * as yup from "yup"
+import DeptDropdown from "../../dropdowns/DeptDropdown";
+import YearDropdown from "../../dropdowns/YearDropDown";
+import SemDropdown from "../../dropdowns/SemDropdown";
+import SectionDropdown from "../../dropdowns/SectionDropdown";
 
 const Attribute = styled(Typography)({
   fontWeight: 'bold',
@@ -43,11 +48,12 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
     sem: yup.string().required("required"),
     section: yup.string().required("required"),
   });
-  // const validateSchema = (values) => {
-  //   const error = {};
+  
+  const [year, setYear] = useState(selectedStudent.class.year);
 
-  //   return error;
-  // }
+  const calcYear = (sem) => {
+    setYear(Math.floor(sem / 2 + sem % 2));
+  }  
 
   const handleSubmit = (values) => {
     console.log(values)
@@ -63,8 +69,9 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
       >
         <Form>
           <div className="flex-column gap-2" >
-            <div style={{ maxHeight: '50vh', overflowY: 'scroll' }}>
-              <table style={{ width: '600px' }}>
+            <div className="flex-column gap-2" style={{ maxHeight: '50vh', overflowY: 'scroll' }}>
+              <div><Typography sx={{ fontWeight: 'bold' }} variant="h3" color="secondary">Profile details</Typography></div>
+              <table style={{ width: '600px' }} className="align-cell-text-left">
                 <tbody>
                   <tr>
                     <td><Attribute>First name</Attribute></td>
@@ -82,24 +89,30 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
                     <td><Attribute>Email</Attribute></td>
                     <td><MyInputText name="email" /></td>
                   </tr>
+                </tbody >
+              </table >
+              <Divider />
+              <div><Typography sx={{ fontWeight: 'bold' }} variant="h3" color="secondary">Academic details</Typography></div>
+              <table style={{ width: '600px' }}>
+                <tbody>
                   <tr>
                     <td><Attribute>Dept</Attribute></td>
-                    <td><MyInputText name="dept" /></td>
+                    <td><DeptDropdown dept={selectedStudent.class.dept} /></td>
                   </tr >
                   <tr>
                     <td><Attribute>Year</Attribute></td>
-                    <td><MyInputText name="year" /></td>
-                  </tr >
+                    <td><TextField value={year} fullWidth /></td>
+                  </tr>
                   <tr>
                     <td><Attribute>Sem</Attribute></td>
-                    <td><MyInputText name="sem" /></td>
-                  </tr >
+                    <td><SemDropdown sem={selectedStudent.class.sem} calcYear={calcYear} /></td>
+                  </tr>
                   <tr>
                     <td><Attribute>Section</Attribute></td>
-                    <td><MyInputText name="section" /></td>
-                  </tr >
-                </tbody >
-              </table >
+                    <td><SectionDropdown section={selectedStudent.class.section} /></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div className="flex-row gap-2">
               <Button variant="outlined" color="secondary" onClick={handleClose}>Cancel</Button>

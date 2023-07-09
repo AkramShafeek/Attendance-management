@@ -55,10 +55,10 @@ const Sidenav = () => {
           return (
             <NavLink key={index} to={element.link} style={{ textDecoration: 'none' }}>
               <ListItemButton elevation={0} sx={{
-                backgroundColor: selectedMenu === element.name ? "#72e095" : "transparent",
+                backgroundColor: selectedMenu === element.name ? palette.primary.main : "transparent",
                 borderRadius: '6px',
                 '&:hover': {
-                  backgroundColor: selectedMenu === element.name ? "#72e095" : "null",
+                  backgroundColor: selectedMenu === element.name ? palette.primary.main : "null",
                 },
                 "& .MuiTouchRipple-child": {
                   backgroundColor: 'none'

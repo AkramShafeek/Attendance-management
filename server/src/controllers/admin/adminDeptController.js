@@ -1,7 +1,7 @@
 const Dept = require('../../models/Department');
 
 const createDept = async (req, res) => {
-    const deptExists = await Dept.findOne({ deptId: req.body.deptId });
+    const deptExists = await Dept.findOne({ $or: [{ deptId: req.body.deptId }, { deptName: req.body.deptName }] });
     if (deptExists)
         throw new Error('Department already exists');
 
@@ -15,26 +15,26 @@ const fetchDepts = async (req, res) => {
 }
 
 const editDept = async (req, res) => {
-    if(!req.body._id)
+    if (!req.body._id)
         throw new Error("Dept id not provided");
 
     const id = req.body._id;
-    const updatedDept = await Dept.findByIdAndUpdate(id, req.body, {new: true});
+    const updatedDept = await Dept.findByIdAndUpdate(id, req.body, { new: true });
 
-    if(!updatedDept)
+    if (!updatedDept)
         throw new Error("Dept doesn't exist");
 
     res.status(200).send(updatedDept);
 }
 
-const deleteDept = async (req, res) => { 
-    if(!req.body._id)
+const deleteDept = async (req, res) => {
+    if (!req.body._id)
         throw new Error("Dept id not provided");
-    
-    const id = req.body._id;
-    const dept = await Dept.deleteOne({_id: id});
 
-    if(!dept)
+    const id = req.body._id;
+    const dept = await Dept.deleteOne({ _id: id });
+
+    if (!dept)
         throw new Error("Dept doesn't exist");
 
     res.status(200).send(dept);

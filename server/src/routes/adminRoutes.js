@@ -44,19 +44,19 @@ const {
 
 // yet to include authentication middleware
 router.route('/dept/create').post(emptyReqBodyValidator, createDept);
-router.route('/dept/read').get(emptyReqBodyValidator, fetchDepts);
+router.route('/dept/read').get(fetchDepts);
 router.route('/dept/update').put(emptyReqBodyValidator, editDept);
 router.route('/dept/delete').delete(emptyReqBodyValidator, deleteDept);
 
-router.route('/faculty/create').post(createFaculty);
-router.route('/faculty/read').get(fetchFaculties);
-router.route('/faculty/update').put(editFaculty);
-router.route('/faculty/delete').delete(deleteFaculty);
+router.route('/faculty/create').post(emptyReqBodyValidator, createFaculty);
+router.route('/faculty/read').get(emptyReqBodyValidator, fetchFaculties);
+router.route('/faculty/update').put(emptyReqBodyValidator, editFaculty);
+router.route('/faculty/delete').delete(emptyReqBodyValidator, deleteFaculty);
 
-router.route('/student/create').post(createStudent);
+router.route('/student/create').post(emptyReqBodyValidator, createStudent);
 router.route('/student/read').get(fetchStudents);
-router.route('/student/update').put(editStudent);
-router.route('/student/delete').delete(deleteStudent);
+router.route('/student/update').put(emptyReqBodyValidator, editStudent);
+router.route('/student/delete').delete(emptyReqBodyValidator, deleteStudent);
 
 router.route('/timetable/create').post(createTimetable);
 router.route('/timetable/read').get(fetchTimetables);

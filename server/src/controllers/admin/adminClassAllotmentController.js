@@ -2,14 +2,12 @@ const Student = require('../../models/Student');
 const ClassAllotment = require('../../models/ClassAllotment');
 // add filters later
 const fetchStudents = async (req, res) => {
-  const students = await Student.find();
+  const students = await Student.find().select("-password");
   res.status(200).send(students);
 }
 
 const createStudent = async (req, res) => {
   console.log(req.body)
-  if (!req.body)
-    throw new Error("Empty request body");
 
   const studentExists = await Student.findOne({ usn: req.body.usn });
   if (studentExists)
@@ -20,8 +18,6 @@ const createStudent = async (req, res) => {
 }
 
 const editStudent = async (req, res) => {
-  if (!req.body)
-    throw new Error("Empty request body");
 
   if (req.body.password)
     delete req.body.password;

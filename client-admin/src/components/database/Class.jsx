@@ -6,20 +6,33 @@ import { depts } from "./sampleData";
 import DeptListItem from "./list renderers/DeptListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { closeDeleteModal, closeEditModal, loadDept, removeDept } from "../../redux/features/deptSlice";
+import { closeDeleteModal, closeEditModal, loadDept } from "../../redux/features/deptSlice";
 import DeptCreateModal from "./modals/DeptCreateModal";
 import { deleteDeptsApi, fetchDeptsApi } from "../../apis/database api/dept";
 import DeletionConfirmationModal from "./modals/DeletionConfirmationModal";
 import DeptEditModal from "./modals/DeptEditModal";
+import ClassListItem from "./list renderers/ClassListItem";
+import { deleteClassApi, fetchClassApi } from "../../apis/database api/class";
+import { loadClass, removeClass } from "../../redux/features/classSlice";
+import ClassEditModal from "./modals/ClassEditModal";
+import ClassCreateModal from "./modals/ClassCreateModal";
 
-const Dept = () => {
+const Class = () => {
 
-  const isEditModalOpen = useSelector((store) => store.dept.isEditModalOpen);
-  const isDeleteModalOpen = useSelector((store) => store.dept.isDeleteModalOpen);
-  const selectedDept = useSelector((store) => store.dept.selectedDept);
-  const deptList = useSelector((store) => store.dept.deptList);
+  const isEditModalOpen = useSelector((store) => store.class.isEditModalOpen);
+  const isDeleteModalOpen = useSelector((store) => store.class.isDeleteModalOpen);
+  const selectedClass = useSelector((store) => store.class.selectedClass);
+  const classList = useSelector((store) => store.class.classList);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(closeEditModal());
+      dispatch(closeDeleteModal());
+      setIsCreateModalOpen(false);
+    }
+  },[]);
 
   const handleEditModalClose = (event, reason) => {
     if (reason === 'backdropClick')
@@ -39,17 +52,17 @@ const Dept = () => {
     setIsCreateModalOpen(false);
   }
 
-  const fetchDepts = async () => {
+  const fetchClass = async () => {
     try {
-      const response = await fetchDeptsApi();
-      dispatch(loadDept(response.data));
+      const response = await fetchClassApi();
+      dispatch(loadClass(response.data));
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    fetchDepts();
+    fetchClass();
   }, []);
 
   const modalStyle = {
@@ -70,7 +83,7 @@ const Dept = () => {
   }
 
   return (
-    <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>      
+    <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>
       <Modal
         open={isCreateModalOpen}
         onClose={handleCreateModalClose}
@@ -83,7 +96,7 @@ const Dept = () => {
               <CloseRoundedIcon />
             </IconButton>
           </div>
-          <DeptCreateModal handleClose={handleCreateModalClose} />
+          <ClassCreateModal handleClose={handleCreateModalClose} />
         </Box>
       </Modal>
       <Modal
@@ -98,7 +111,7 @@ const Dept = () => {
               <CloseRoundedIcon />
             </IconButton>
           </div>
-          <DeletionConfirmationModal payload={selectedDept} deleteApi={deleteDeptsApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeDept}/>
+          <DeletionConfirmationModal payload={selectedClass} deleteApi={deleteClassApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeClass} />
         </Box>
       </Modal>
       <Modal
@@ -113,7 +126,7 @@ const Dept = () => {
               <CloseRoundedIcon />
             </IconButton>
           </div>
-          <DeptEditModal selectedDept={selectedDept} handleClose={handleEditModalClose} />
+          <ClassEditModal selectedClass={selectedClass} handleClose={handleEditModalClose} />
         </Box>
       </Modal>
       <table>
@@ -121,12 +134,22 @@ const Dept = () => {
           <tr className='list-item header'>
             <td>
               <Typography sx={{ fontWeight: 'bold' }}>
-                ID
+                Department
               </Typography>
             </td>
             <td>
               <Typography sx={{ fontWeight: 'bold' }}>
-                Department
+                Year
+              </Typography>
+            </td>
+            <td>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Semester
+              </Typography>
+            </td>
+            <td>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Section
               </Typography>
             </td>
             <td style={{ marginRight: '10px', textAlign: 'right' }}>
@@ -135,7 +158,7 @@ const Dept = () => {
               </Typography>
             </td>
           </tr>
-          <DeptListItem list={deptList} />
+          <ClassListItem list={classList} />
         </tbody>
       </table>
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => setIsCreateModalOpen(true)}>
@@ -145,4 +168,4 @@ const Dept = () => {
   );
 }
 
-export default Dept;
+export default Class;

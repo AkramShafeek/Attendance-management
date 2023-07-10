@@ -39,6 +39,12 @@ const {
     editAttendanceRecord,
     deleteAttendanceRecord,
 } = require('../controllers/admin/adminAttendanceRecordController');
+const {
+    fetchClass,
+    createClass,
+    editClass,
+    deleteClass
+} = require('../controllers/admin/adminClassController');
 
 
 
@@ -47,6 +53,11 @@ router.route('/dept/create').post(emptyReqBodyValidator, createDept);
 router.route('/dept/read').get(fetchDepts);
 router.route('/dept/update').put(emptyReqBodyValidator, editDept);
 router.route('/dept/delete').delete(emptyReqBodyValidator, deleteDept);
+
+router.route('/class/read').get(fetchClass);
+router.route('/class/create').post(emptyReqBodyValidator,createClass);
+router.route('/class/update').put(emptyReqBodyValidator,editClass);
+router.route('/class/delete').delete(emptyReqBodyValidator,deleteClass);
 
 router.route('/faculty/create').post(emptyReqBodyValidator, createFaculty);
 router.route('/faculty/read').get(emptyReqBodyValidator, fetchFaculties);

@@ -10,11 +10,11 @@ const classSchema = mongoose.Schema({
         required: true
     },
     year: {
-        type: String,
+        type: Number,
         required: true
     },
     sem: {
-        type: String,
+        type: Number,
         required: true
     },
     section: {
@@ -29,18 +29,24 @@ classSchema.pre('deleteOne', async function (next) {
 
     // validate class allotment references
     const existingClassAllotment = await ClassAllotment.findOne({ class: this._id });
-    if (existingClassAllotment)
+    if (existingClassAllotment) {
+        console.log("class allotment is referenced");
         throw new Error(referenceError);
-    
+    }
+
     // validate class timetable references
     const existingClassTT = await ClassTT.findOne({ class: this._id });
-    if (existingClassTT)
+    if (existingClassTT) {
+        console.log("class timetable is referenced");
         throw new Error(referenceError);
-    
+    }
+
     // validate student references
     const existingStudent = await Student.findOne({ class: this._id });
-    if (existingStudent)
+    if (existingStudent) {
+        console.log("student is referenced");
         throw new Error(referenceError);
+    }
 })
 
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { removeDept } from "../../../redux/features/deptSlice";
 import { useDispatch } from "react-redux";
 
-const DeletionConfirmationModal = ({ payload, deleteApi, handleClose }) => {
+const DeletionConfirmationModal = ({ payload, deleteApi, handleClose, removeItemFromRedux }) => {
   const defaultErrMsg = "Couldn't delete due to some error, please try again later";
   const [isLoading, setIsLoading] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
@@ -18,7 +18,7 @@ const DeletionConfirmationModal = ({ payload, deleteApi, handleClose }) => {
       timeout = setTimeout(() => setIsLoading(true), 1000);
       const response = await deleteApi(payload);
       if (response)
-        dispatch(removeDept(payload));
+        dispatch(removeItemFromRedux(payload));
       setShowStatus(true);
       setIsSuccess(true);
     } catch (error) {

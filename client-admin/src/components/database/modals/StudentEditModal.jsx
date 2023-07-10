@@ -33,10 +33,10 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
     lastname: selectedStudent.lastname,
     usn: selectedStudent.usn,
     email: selectedStudent.email,
-    dept: selectedStudent.dept,
-    year: selectedStudent.year,
-    sem: selectedStudent.sem,
-    section: selectedStudent.section,
+    dept: selectedStudent.class.dept._id,
+    year: selectedStudent.class.year,
+    sem: selectedStudent.class.sem,
+    section: selectedStudent.class.section,
   }
   const validateSchema = yup.object().shape({
     firstname: yup.string().required("required"),
@@ -48,15 +48,16 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
     sem: yup.string().required("required"),
     section: yup.string().required("required"),
   });
-  
+
   const [year, setYear] = useState(selectedStudent.class.year);
 
   const calcYear = (sem) => {
     setYear(Math.floor(sem / 2 + sem % 2));
-  }  
+  }
 
   const handleSubmit = (values) => {
-    console.log(values)
+    values.year = year;
+    console.log(values);
   }
 
   return (
@@ -97,19 +98,19 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
                 <tbody>
                   <tr>
                     <td><Attribute>Dept</Attribute></td>
-                    <td><DeptDropdown dept={selectedStudent.class.dept} /></td>
+                    <td><DeptDropdown dept={selectedStudent.class.dept} name="dept" /></td>
                   </tr >
                   <tr>
                     <td><Attribute>Year</Attribute></td>
-                    <td><TextField value={year} fullWidth /></td>
+                    <td><TextField value={year} fullWidth/></td>
                   </tr>
                   <tr>
                     <td><Attribute>Sem</Attribute></td>
-                    <td><SemDropdown sem={selectedStudent.class.sem} calcYear={calcYear} /></td>
+                    <td><SemDropdown name="sem" calcYear={calcYear} /></td>
                   </tr>
                   <tr>
                     <td><Attribute>Section</Attribute></td>
-                    <td><SectionDropdown section={selectedStudent.class.section} /></td>
+                    <td><SectionDropdown name="section" /></td>
                   </tr>
                 </tbody>
               </table>

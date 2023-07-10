@@ -21,9 +21,12 @@ app.use(cors());
 app.use(express.json());
 
 // routes config
-app.use('/api/v1/admin/',adminRouter);
+app.use('/api/v1/admin/', adminRouter);
 
 
+app.use('*', (req, res) => {
+  throw new Error("Route doesn't exist");
+})
 app.use(errorHandlerMiddleware);
 
 const PORT = process.env.PORT || 4001;

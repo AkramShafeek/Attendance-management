@@ -1,14 +1,12 @@
 import { MenuItem, Select } from "@mui/material";
+import { useField } from "formik";
 import { useState } from "react";
 
-const SectionDropdown = ({ section }) => {
-  const [selectedSection, setSelectedSection] = useState(section ? section : 'A');
-
-  const handleChange = (event) => {
-    setSelectedSection(event.target.value);    
-  }
+const SectionDropdown = (props) => {  
+  const [field, meta] = useField(props);
+  
   return (
-    <Select value={selectedSection} onChange={handleChange} fullWidth MenuProps={{
+    <Select {...field} fullWidth MenuProps={{
       style: {
         maxHeight: '300px',
       },

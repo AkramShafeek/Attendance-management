@@ -1,18 +1,18 @@
 import { adminRootUrl } from "../config";
 import axios from "axios";
 
-export const fetchDeptsApi = async () => {
+export const fetchClassApi = async () => {
   try {
-    const response = await axios.get(`${adminRootUrl}/dept/read`);
+    const response = await axios.get(`${adminRootUrl}/class/read`);
     return { success: true, data: response.data };
   } catch (error) {
     console.log(error);
   }
 }
 
-export const createDeptsApi = async (payload) => {
+export const createClassApi = async (payload) => {
   try {
-    const url = `${adminRootUrl}/dept/create`;
+    const url = `${adminRootUrl}/class/create`;
     const config = {
       headers: {
         'Content-type': 'application/json'
@@ -27,9 +27,9 @@ export const createDeptsApi = async (payload) => {
   }
 }
 
-export const editDeptsApi = async (payload) => {
+export const editClassApi = async (payload) => {
   try {
-    const url = `${adminRootUrl}/dept/update`;
+    const url = `${adminRootUrl}/class/update`;
     const config = {
       headers: {
         'Content-type': 'application/json'
@@ -44,9 +44,9 @@ export const editDeptsApi = async (payload) => {
   }
 }
 
-export const deleteDeptsApi = async (payload) => {
+export const deleteClassApi = async (payload) => {
   try {
-    const url = `${adminRootUrl}/dept/delete`;
+    const url = `${adminRootUrl}/class/delete`;
     // payload has to be sent along with config in delete request
     const config = {
       data: payload,

@@ -1,14 +1,12 @@
 import { MenuItem, Select } from "@mui/material";
+import { useField } from "formik";
 import { useState } from "react";
 
-const YearDropdown = ({ year }) => {  
-  const [selectedYear, setSelectedYear] = useState(year ? year : 1);  
+const YearDropdown = (props) => {
+  const [field, meta] = useField(props);
 
-  const handleChange = (event) => {
-    setSelectedYear(event.target.value);
-  }
   return (
-    <Select value={selectedYear} onChange={handleChange} fullWidth>
+    <Select {...field} fullWidth>
       <MenuItem value={1}>1</MenuItem>
       <MenuItem value={2}>2</MenuItem>
       <MenuItem value={3}>3</MenuItem>

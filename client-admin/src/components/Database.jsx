@@ -9,6 +9,7 @@ import Faculty from "./database/Faculty";
 import StudentProfile from "./database/StudentProfile";
 import FacultyProfile from "./database/FacultyProfile";
 import { useTheme } from "@emotion/react";
+import Class from "./database/Class";
 
 const Database = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -33,16 +34,18 @@ const Database = () => {
           <Tabs onChange={(event, value) => setTabValue(value)} value={tabValue}>
             <Tab label="Dept" value={0}></Tab>
             <Tab label="Course" value={1}></Tab>
-            <Tab label="Faculty" value={2}></Tab>
-            <Tab label="Student" value={3}></Tab>
+            <Tab label="Class" value={2}></Tab>
+            <Tab label="Faculty" value={3}></Tab>
+            <Tab label="Student" value={4}></Tab>
           </Tabs>
         </Box>
         <Divider />
         <Box>
           {tabValue === 0 && <Dept />}
           {tabValue === 1 && <Course />}
-          {tabValue === 2 && <Faculty />}
-          {tabValue === 3 && <Student />}
+          {tabValue === 2 && <Class />}
+          {tabValue === 3 && <Faculty />}
+          {tabValue === 4 && <Student />}
         </Box>
       </Box>
       {/* <Divider sx={{

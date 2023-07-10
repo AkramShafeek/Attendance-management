@@ -1,17 +1,19 @@
 import { MenuItem, Select } from "@mui/material";
+import { useField } from "formik";
 import { useState } from "react";
 
-const SemDropdown = ({ sem, calcYear }) => {
-  const [selectedSem, setSelectedSem] = useState(sem ? sem : 1);
+const SemDropdown = (props) => {
+  const [field, meta] = useField(props);
 
   const handleChange = (event) => {
-    setSelectedSem(event.target.value);
-    calcYear(event.target.value);
+    props.calcYear(event.target.value);
+    field.onChange(event);
   }
+
   return (
-    <Select value={selectedSem} onChange={handleChange} fullWidth MenuProps={{
+    <Select {...field} onChange={handleChange} fullWidth MenuProps={{
       style: {
-        maxHeight: '300px',        
+        maxHeight: '300px',
       },
     }}>
       <MenuItem value={1}>1</MenuItem>

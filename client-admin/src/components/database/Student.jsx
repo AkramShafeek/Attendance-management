@@ -7,7 +7,7 @@ import StudentListItem from "./list renderers/StudentListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
-import { closeEditModal } from "../../redux/features/studentSlice";
+import { closeEditModal, loadStudents } from "../../redux/features/studentSlice";
 import StudentCreateModal from "./modals/StudentCreateModal";
 import StudentEditModal from "./modals/StudentEditModal";
 import { fetchStudentsApi } from "../../apis/database api/student";
@@ -18,6 +18,7 @@ const Student = () => {
 
   const selectedStudent = useSelector((store) => store.student.selectedStudent);
   const isOpenEditModal = useSelector((store) => store.student.isOpenEditModal);
+  const studentList = useSelector((store) => store.student.studentList);
   const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
   const [studentsData, setStudentsData] = useState([]);
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const Student = () => {
 
   const fetchStudents = async () => {
     const response = await fetchStudentsApi();
-    setStudentsData(response.data);
+    dispatch(loadStudents(response.data));
     console.log(response);
   }
 
@@ -70,7 +71,7 @@ const Student = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle} className="flex-column gap-2">
-          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>            
+          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
             <IconButton onClick={handleEditModalClose}>
               <CloseRoundedIcon />
             </IconButton>
@@ -129,7 +130,7 @@ const Student = () => {
             </Typography>
           </td>
         </tr>
-        <StudentListItem list={studentsData} />
+        <StudentListItem list={studentList} />
       </table>
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => setIsOpenCreateModal(true)}>
         <AddIcon />

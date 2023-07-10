@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  studentList: [],
   selectedStudent: null,
   isOpenEditModal: false,
 }
@@ -9,8 +10,22 @@ const studentSlice = createSlice({
   name: 'student',
   initialState,
   reducers: {
+    loadStudents: (state, action) => {
+      state.studentList = action.payload;
+    },
     selectStudent: (state, action) => {
       state.selectedStudent = action.payload;
+    },
+    addStudent: (state, action) => {
+      var found = false;
+      state.studentList.forEach((element, index) => {
+        if (element._id === action.payload._id) {
+          found = true;
+          state.studentList[index] = action.payload;
+        }
+      })
+      if (!found)
+        state.studentList.push(action.payload);
     },
     openEditModal: (state, action) => {
       state.isOpenEditModal = true;
@@ -21,5 +36,5 @@ const studentSlice = createSlice({
   }
 });
 
-export const { selectStudent, openEditModal, closeEditModal } = studentSlice.actions;
+export const { loadStudents, selectStudent, openEditModal, closeEditModal, addStudent } = studentSlice.actions;
 export default studentSlice.reducer;

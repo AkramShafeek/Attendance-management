@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, MenuItem, Select, TextField, Typography, styled } from "@mui/material";
+import { Alert, Avatar, Button, Collapse, Divider, LinearProgress, MenuItem, Select, TextField, Typography, styled } from "@mui/material";
 import { Form, Formik, useField } from "formik";
 import { useState } from "react";
 import * as yup from "yup"
@@ -6,6 +6,12 @@ import DeptDropdown from "../../dropdowns/DeptDropdown";
 import YearDropdown from "../../dropdowns/YearDropDown";
 import SemDropdown from "../../dropdowns/SemDropdown";
 import SectionDropdown from "../../dropdowns/SectionDropdown";
+import { getClassId } from "../../utils/functions/getClassId";
+import { fetchClassApi } from "../../../apis/database api/class";
+import { loadClass } from "../../../redux/features/classSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { editStudentsApi } from "../../../apis/database api/student";
+import { addStudent } from "../../../redux/features/studentSlice";
 
 const Attribute = styled(Typography)({
   fontWeight: 'bold',
@@ -27,6 +33,15 @@ const MyInputText = (props) => {
 }
 
 const StudentEditModal = ({ selectedStudent, handleClose }) => {
+
+  const classList = useSelector((store) => store.class.classList);
+  const defaultErrMsg = 'Some error, please try again later';
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [showStatus, setShowStatus] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(defaultErrMsg);
+  const dispatch = useDispatch();
+
   const initialValues = {
     _id: selectedStudent._id,
     firstname: selectedStudent.firstname,
@@ -34,7 +49,6 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
     usn: selectedStudent.usn,
     email: selectedStudent.email,
     dept: selectedStudent.class.dept._id,
-    year: selectedStudent.class.year,
     sem: selectedStudent.class.sem,
     section: selectedStudent.class.section,
   }
@@ -44,7 +58,6 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
     usn: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
     dept: yup.string().required("required"),
-    year: yup.string().required("required"),
     sem: yup.string().required("required"),
     section: yup.string().required("required"),
   });
@@ -55,13 +68,72 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
     setYear(Math.floor(sem / 2 + sem % 2));
   }
 
-  const handleSubmit = (values) => {
+  const fetchClass = async () => {
+    try {
+      const response = fetchClassApi();
+      if (response)
+        dispatch(loadClass(response.data));
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  const getPayload = async (values) => {
+    try {
+      const { dept, year, sem, section } = values;
+      if (!classList || !classList.length) {
+        await fetchClass();
+      }
+      const classId = getClassId(classList, { dept, year, sem, section });
+      if (!classId)
+        throw "Class doesn't exist";
+
+      const payload = { ...values };
+
+      delete payload.dept;
+      delete payload.year;
+      delete payload.sem;
+      delete payload.section;
+      payload.class = classId;
+
+      return payload;
+    } catch (error) {
+      console.log(error)
+      throw error;
+    }
+  }
+
+  const handleSubmit = async (values) => {
     values.year = year;
-    console.log(values);
+    var timeout;
+    try {
+      const payload = values;
+      timeout = setTimeout(() => setIsLoading(true), 1000);
+      const response = await editStudentsApi(payload);
+      if (response)
+        dispatch(addStudent(response.data));
+      setIsSuccess(true);
+    } catch (error) {
+      console.log(error);
+      setIsSuccess(false);
+      setErrorMsg(error);
+    } finally {
+      clearTimeout(timeout);
+      setShowStatus(true);
+      setIsLoading(false);
+      setTimeout(() => setShowStatus(false), 5000);
+    }
   }
 
   return (
     <div className="flex-column align-items-center gap-2">
+      {isLoading && <LinearProgress sx={{ width: '100%', borderRadius: '10px', margin: '10px 0px' }} color="secondary" />}
+      <Collapse in={showStatus} sx={{ width: '100%' }}>
+        <Alert color={isSuccess ? "primary" : "error"} severity={isSuccess ? "success" : "error"}>
+          {isSuccess ? 'Edited department successfully' : errorMsg}
+        </Alert>
+      </Collapse>
       <Avatar src={selectedStudent.avatar} style={{ width: '100px', height: '100px' }}></Avatar>
       <Formik
         initialValues={initialValues}
@@ -102,7 +174,7 @@ const StudentEditModal = ({ selectedStudent, handleClose }) => {
                   </tr >
                   <tr>
                     <td><Attribute>Year</Attribute></td>
-                    <td><TextField value={year} fullWidth/></td>
+                    <td><TextField value={year} fullWidth /></td>
                   </tr>
                   <tr>
                     <td><Attribute>Sem</Attribute></td>

@@ -32,12 +32,12 @@ const courseSchema = mongoose.Schema({
 courseSchema.pre('deleteOne', async function (next) {
 
     const referenceError = 'Course is referenced and cannot be deleted';
-
+    const doc = await Course.findOne(this.getFilter());
     // validate class allotment references
-    const existingClassAllotment = await ClassAllotment.findOne({ course: this._id });
+    const existingClassAllotment = await ClassAllotment.findOne({ course: doc._id });
     if (existingClassAllotment)
         throw new Error(referenceError);
-    
+
 })
 
 

@@ -5,6 +5,7 @@ import facultyReducer from "./features/facultySlice";
 import modeReducer from "./features/themeSlice";
 import deptReducer from "./features/deptSlice";
 import classReducer from "./features/classSlice";
+import courseReducer from "./features/courseSlice";
 
 import { combineReducers } from "@reduxjs/toolkit";
 import {
@@ -25,6 +26,7 @@ const reducers = combineReducers({
   faculty: facultyReducer,
   dept: deptReducer,
   class: classReducer,
+  course: courseReducer,
   mode: modeReducer
 });
 

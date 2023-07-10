@@ -1,37 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  classList: [],
-  selectedClass: null,
+  courseList: [],
+  selectedCourse: null,
   isEditModalOpen: false,
   isCreateModalOpen: false,
   isDeleteModalOpen: false,
 }
 
-const classSlice = createSlice({
-  name: 'class',
+const courseSlice = createSlice({
+  name: 'course',
   initialState,
   reducers: {
-    loadClass: (state, action) => {
-      state.classList = action.payload;
+    loadCourse: (state, action) => {
+      state.courseList = action.payload;
     },
-    selectClass: (state, action) => {
-      state.selectedClass = action.payload;
+    selectCourse: (state, action) => {
+      state.selectedCourse = action.payload;
     },
-    addClass: (state, action) => {      
+    addCourse: (state, action) => {
       var found = false;
-      state.classList.forEach((element, index) => {
+      state.courseList.forEach((element, index) => {
         if (element._id === action.payload._id) {
           found = true;
-          state.classList[index] = action.payload;
+          state.courseList[index] = action.payload;
         }
       })
       if (!found)
-        state.classList.push(action.payload);    
+        state.courseList.push(action.payload);
     },
-    removeClass: (state, action) => {
-      const newList = state.classList.filter((element) => element._id !== action.payload._id);
-      state.classList = newList;
+    removeCourse: (state, action) => {
+      const newList = state.courseList.filter((element) => element._id !== action.payload._id);
+      state.courseList = newList;
     },
     openEditModal: (state, action) => {
       state.isEditModalOpen = true;
@@ -49,12 +49,12 @@ const classSlice = createSlice({
 });
 
 export const {
-  loadClass,
-  selectClass,
-  addClass,
-  removeClass,
+  loadCourse,
+  selectCourse,
+  addCourse,
+  removeCourse,
   openEditModal,
   closeEditModal,
   openDeleteModal,
-  closeDeleteModal } = classSlice.actions;
-export default classSlice.reducer;
+  closeDeleteModal } = courseSlice.actions;
+export default courseSlice.reducer;

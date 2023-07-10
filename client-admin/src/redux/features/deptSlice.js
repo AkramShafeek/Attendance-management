@@ -9,7 +9,7 @@ const initialState = {
 }
 
 const deptSlice = createSlice({
-  name: 'faculty',
+  name: 'department',
   initialState,
   reducers: {
     loadDept: (state, action) => {

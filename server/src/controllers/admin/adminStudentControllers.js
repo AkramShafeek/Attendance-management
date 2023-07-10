@@ -14,11 +14,25 @@ const fetchStudents = async (req, res) => {
 const createStudent = async (req, res) => {
   console.log(req.body)
 
-  const studentExists = await Student.findOne({ usn: req.body.usn });
+  const { dept, year, sem, section } = req.body;
+  const existingClass = await Class.findOne({ $and: [{ dept, year, sem, section }] });
+  if (!existingClass)
+    throw new Error("Class doesn't exist");
+
+  delete req.body.dept;
+  delete req.body.year;
+  delete req.body.sem;
+  delete req.body.section;
+
+  req.body.class = existingClass._id;
+
+  const studentExists = await Student.findOne({ $or: [{ usn: req.body.usn }, { email: req.body.email }] });
   if (studentExists)
     throw new Error('Student already exists');
 
   const newStudent = await Student.create(req.body);
+  await Class.populate(newStudent, { path: 'class' });
+  await Dept.populate(newStudent, { path: 'class.dept' });
   res.status(200).send(newStudent);
 }
 

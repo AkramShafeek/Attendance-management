@@ -4,6 +4,8 @@ const initialState = {
   studentList: [],
   selectedStudent: null,
   isOpenEditModal: false,
+  isCreateModalOpen: false,
+  isDeleteModalOpen: false,
 }
 
 const studentSlice = createSlice({
@@ -27,14 +29,32 @@ const studentSlice = createSlice({
       if (!found)
         state.studentList.push(action.payload);
     },
+    removeStudent: (state, action) => {
+      const newList = state.studentList.filter((element) => element._id !== action.payload._id);
+      state.studentList = newList;
+    },
     openEditModal: (state, action) => {
       state.isOpenEditModal = true;
     },
     closeEditModal: (state, action) => {
       state.isOpenEditModal = false;
+    },
+    openDeleteModal: (state, action) => {
+      state.isDeleteModalOpen = true;
+    },
+    closeDeleteModal: (state, action) => {
+      state.isDeleteModalOpen = false;
     }
   }
 });
 
-export const { loadStudents, selectStudent, openEditModal, closeEditModal, addStudent } = studentSlice.actions;
+export const { 
+  loadStudents,
+  selectStudent,
+  openEditModal,
+  closeEditModal,
+  openDeleteModal,
+  closeDeleteModal,
+  addStudent,
+  removeStudent } = studentSlice.actions;
 export default studentSlice.reducer;

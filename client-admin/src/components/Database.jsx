@@ -54,8 +54,8 @@ const Database = () => {
         backgroundColor: 'rgb(230, 230, 230)',
       }}></Divider> */}
       <Box className="sub" sx={{ backgroundColor: palette.background.alt,borderRadius: '10px' }}>
-        {tabValue === 2 && <FacultyProfile />}
-        {tabValue === 3 && <StudentProfile />}
+        {tabValue === 3 && <FacultyProfile />}
+        {tabValue === 4 && <StudentProfile />}
       </Box>
     </Box>
   );

@@ -3,7 +3,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { depts } from "../sampleData";
 import { useDispatch } from "react-redux";
-import { selectStudent, openEditModal } from "../../../redux/features/studentSlice";
+import { selectStudent, openEditModal, openDeleteModal } from "../../../redux/features/studentSlice";
 import { useTheme } from "@emotion/react";
 // import { selectStudent } from "../../redux/features/studentSlice";
 
@@ -30,7 +30,7 @@ const StudentListItem = (props) => {
   }
 
   const getBackgroundColor = (index) => {
-    
+
   }
 
   return (
@@ -67,12 +67,18 @@ const StudentListItem = (props) => {
           </Typography>
         </td>
         <td style={{ marginRight: '10px', textAlign: 'right' }}>
-          <IconButton onClick={handleEditClick}>
+          <IconButton onClick={() => {
+            dispatch(selectStudent(student));
+            dispatch(openEditModal());
+          }}>
             <Icon>
               <EditRoundedIcon color="secondary" />
             </Icon>
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => {
+            dispatch(selectStudent(student));
+            dispatch(openDeleteModal());
+          }}>
             <Icon>
               <DeleteIcon color="error" />
             </Icon>

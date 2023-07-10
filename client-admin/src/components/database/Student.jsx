@@ -7,10 +7,11 @@ import StudentListItem from "./list renderers/StudentListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
-import { closeEditModal, loadStudents } from "../../redux/features/studentSlice";
+import { closeDeleteModal, closeEditModal, loadStudents, removeStudent } from "../../redux/features/studentSlice";
 import StudentCreateModal from "./modals/StudentCreateModal";
 import StudentEditModal from "./modals/StudentEditModal";
-import { fetchStudentsApi } from "../../apis/database api/student";
+import { deleteStudentsApi, fetchStudentsApi } from "../../apis/database api/student";
+import DeletionConfirmationModal from "./modals/DeletionConfirmationModal";
 
 
 
@@ -18,6 +19,7 @@ const Student = () => {
 
   const selectedStudent = useSelector((store) => store.student.selectedStudent);
   const isOpenEditModal = useSelector((store) => store.student.isOpenEditModal);
+  const isDeleteModalOpen = useSelector((store) => store.student.isDeleteModalOpen);
   const studentList = useSelector((store) => store.student.studentList);
   const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
   const [studentsData, setStudentsData] = useState([]);
@@ -33,6 +35,12 @@ const Student = () => {
     if (reason === 'backdropClick')
       return;
     setIsOpenCreateModal(false);
+  }
+
+  const handleDeleteModalClose = (event, reason) => {
+    if (reason === 'backdropClick')
+      return;
+    dispatch(closeDeleteModal());
   }
 
   const fetchStudents = async () => {
@@ -90,6 +98,34 @@ const Student = () => {
             <Button onClick={handleCreateModalClose} color="secondary">close</Button>
           </div>
           <StudentCreateModal handleClose={handleCreateModalClose} />
+        </Box>
+      </Modal>
+      <Modal
+        open={isOpenCreateModal}
+        onClose={handleCreateModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
+            <Button onClick={handleCreateModalClose} color="secondary">close</Button>
+          </div>
+          <StudentCreateModal handleClose={handleCreateModalClose} />
+        </Box>
+      </Modal>
+      <Modal
+        open={isDeleteModalOpen}
+        onClose={handleDeleteModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle} className="flex-column gap-2">
+          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
+            <IconButton onClick={handleDeleteModalClose}>
+              <CloseRoundedIcon />
+            </IconButton>
+          </div>
+          <DeletionConfirmationModal payload={selectedStudent} deleteApi={deleteStudentsApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeStudent} />
         </Box>
       </Modal>
       <table>

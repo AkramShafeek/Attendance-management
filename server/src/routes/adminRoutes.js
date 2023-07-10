@@ -71,7 +71,7 @@ router.route('/class/update').put(emptyReqBodyValidator, editClass);
 router.route('/class/delete').delete(emptyReqBodyValidator, deleteClass);
 
 router.route('/faculty/create').post(emptyReqBodyValidator, createFaculty);
-router.route('/faculty/read').get(emptyReqBodyValidator, fetchFaculties);
+router.route('/faculty/read').get(fetchFaculties);
 router.route('/faculty/update').put(emptyReqBodyValidator, editFaculty);
 router.route('/faculty/delete').delete(emptyReqBodyValidator, deleteFaculty);
 

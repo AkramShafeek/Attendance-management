@@ -31,7 +31,7 @@ const FacultyListItem = (props) => {
 
   return (
     list.map((faculty, index) =>
-      <tr className="list-item"
+      <tr className="list-item" key={faculty._id}
         onClick={() => handleSelectClick(faculty)}
         style={{ backgroundColor: index % 2 === 0 ? palette.neutral.light : 'transparent' }}>
         <td>
@@ -49,7 +49,7 @@ const FacultyListItem = (props) => {
         </td>
         <td>
           <Typography sx={{ fontSize: 'small' }}>
-            {faculty.dept}
+            {faculty.dept.deptId}
           </Typography>
         </td>
         <td>

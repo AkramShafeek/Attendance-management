@@ -1,6 +1,7 @@
 import { Avatar, Button, TextField, Typography, styled } from "@mui/material";
 import { Form, Formik, useField } from "formik";
 import * as yup from "yup"
+import DeptDropdown from "../../dropdowns/DeptDropdown";
 
 const Attribute = styled(Typography)({
   fontWeight: 'bold',
@@ -28,7 +29,7 @@ const FacultyEditModal = ({ selectedFaculty, handleClose }) => {
     lastname: selectedFaculty.lastname,
     empid: selectedFaculty.empid,
     email: selectedFaculty.email,
-    dept: selectedFaculty.dept,
+    dept: selectedFaculty.dept._id,
   }
   const validateSchema = yup.object().shape({
     firstname: yup.string().required("required"),
@@ -76,7 +77,7 @@ const FacultyEditModal = ({ selectedFaculty, handleClose }) => {
               </tr>
               <tr>
                 <td><Attribute>Dept</Attribute></td>
-                <td><MyInputText name="dept" /></td>
+                <td><DeptDropdown name="dept" /></td>
               </tr>
             </tbody>
           </table>

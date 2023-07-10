@@ -28,7 +28,7 @@ const FacultyProfile = () => {
               </tr>
               <tr>
                 <td><Typography fontWeight={'bold'} fontSize={'small'}>Dept</Typography></td>
-                <td>{selectedFaculty.dept}</td>
+                <td>{selectedFaculty.dept.deptName}</td>
               </tr>
             </tbody>
           </table>

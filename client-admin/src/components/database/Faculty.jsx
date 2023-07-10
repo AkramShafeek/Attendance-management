@@ -3,18 +3,19 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { faculty } from "./sampleData";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { closeEditModal } from "../../redux/features/facultySlice";
+import { useEffect, useState } from "react";
+import { closeEditModal, loadFaculty } from "../../redux/features/facultySlice";
 import FacultyListItem from "./list renderers/FacultyListItem";
 import FacultyCreateModal from "./modals/FacultyCreateModal";
 import FacultyEditModal from "./modals/FacultyEditModal";
-
+import { fetchFacultyApi } from "../../apis/database api/faculty";
 
 
 const Faculty = () => {
 
   const selectedFaculty = useSelector((store) => store.faculty.selectedFaculty);
-  const isOpenEditModal = useSelector((store) => store.faculty.isOpenEditModal);
+  const isEditModalOpen = useSelector((store) => store.faculty.isEditModalOpen);
+  const facultyList = useSelector((store) => store.faculty.facultyList);
   const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
   const dispatch = useDispatch();
 
@@ -29,6 +30,19 @@ const Faculty = () => {
       return;
     setIsOpenCreateModal(false);
   }
+
+  const fetchFaculty = async () => {
+    try {
+      const response = await fetchFacultyApi();
+      dispatch(loadFaculty(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchFaculty();
+  }, []);
 
   const modalStyle = {
     position: 'absolute',
@@ -50,7 +64,7 @@ const Faculty = () => {
   return (
     <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>
       <Modal
-        open={isOpenEditModal}
+        open={isEditModalOpen}
         onClose={handleEditModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -108,7 +122,7 @@ const Faculty = () => {
             </Typography>
           </td>
         </tr>
-        <FacultyListItem list={faculty} />
+        <FacultyListItem list={facultyList} />
       </table>
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => { setIsOpenCreateModal(true) }}>
         <AddIcon />

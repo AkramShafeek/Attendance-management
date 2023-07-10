@@ -1,6 +1,7 @@
 import { Avatar, Button, TextField, Typography, styled } from "@mui/material";
 import { Form, Formik, useField } from "formik";
 import * as yup from "yup"
+import DeptDropdown from "../../dropdowns/DeptDropdown";
 
 const Attribute = styled(Typography)({
   fontWeight: 'bold',
@@ -47,7 +48,7 @@ const FacultyCreateModal = ({ handleClose }) => {
   }
 
   return (
-    <div className="flex-column align-items-center gap-1" style={{ maxHeight: '75vh', overflowY: 'scroll' }}>
+    <div className="flex-column align-items-center gap-2" style={{ maxHeight: '75vh', overflowY: 'scroll' }}>
       <Avatar style={{ width: '100px', height: '100px' }}></Avatar>
       <Formik
         initialValues={initialValues}
@@ -75,7 +76,7 @@ const FacultyCreateModal = ({ handleClose }) => {
               </tr>
               <tr>
                 <td><Attribute>Dept</Attribute></td>
-                <td><MyInputText name="dept" /></td>
+                <td><DeptDropdown name="dept" /></td>
               </tr>
             </tbody>
           </table>

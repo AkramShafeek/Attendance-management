@@ -2,7 +2,7 @@ const Faculty = require('../../models/Faculty');
 
 // add filters later
 const fetchFaculties = async (req, res) => {
-  const faculties = await Faculty.find();
+  const faculties = await Faculty.find().populate('dept');
   res.status(200).send(faculties);
 }
 

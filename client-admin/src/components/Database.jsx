@@ -26,8 +26,6 @@ const Database = () => {
         height: '100%',
         position: 'relative',
         backgroundColor: palette.background.alt,
-        // borderLeft: '1px solid ' + palette.neutral.light,
-        // borderRight: '1px solid ' + palette.neutral.light,        
         borderRadius: '10px'
       }}>
         <Box>
@@ -48,12 +46,7 @@ const Database = () => {
           {tabValue === 4 && <Student />}
         </Box>
       </Box>
-      {/* <Divider sx={{
-        height: '98%',
-        width: '2px',
-        backgroundColor: 'rgb(230, 230, 230)',
-      }}></Divider> */}
-      <Box className="sub" sx={{ backgroundColor: palette.background.alt,borderRadius: '10px' }}>
+      <Box className="sub" sx={{ backgroundColor: palette.background.alt, borderRadius: '10px' }}>
         {tabValue === 3 && <FacultyProfile />}
         {tabValue === 4 && <StudentProfile />}
       </Box>

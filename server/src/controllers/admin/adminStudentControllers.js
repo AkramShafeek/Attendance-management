@@ -15,8 +15,8 @@ const createStudent = async (req, res) => {
   console.log(req.body)
 
   const { dept, year, sem, section } = req.body;
-  const existingClass = await Class.findOne({ $and: [{ dept, year, sem, section }] });
-  if (!existingClass)
+  const classReference = await Class.findOne({ $and: [{ dept, year, sem, section }] });
+  if (!classReference)
     throw new Error("Class doesn't exist");
 
   delete req.body.dept;
@@ -24,7 +24,7 @@ const createStudent = async (req, res) => {
   delete req.body.sem;
   delete req.body.section;
 
-  req.body.class = existingClass._id;
+  req.body.class = classReference._id;
 
   const studentExists = await Student.findOne({ $or: [{ usn: req.body.usn }, { email: req.body.email }] });
   if (studentExists)

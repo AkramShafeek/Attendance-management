@@ -51,6 +51,10 @@ const {
     deleteCourse,
     editCourse,
 } = require('../controllers/admin/adminCourseController');
+const {
+    fetchClassAllotments,
+    createClassAllotment
+} = require('../controllers/admin/adminClassAllotmentController');
 
 
 
@@ -62,8 +66,8 @@ router.route('/dept/delete').delete(emptyReqBodyValidator, deleteDept);
 
 router.route('/course/read').get(fetchCourse);
 router.route('/course/create').post(emptyReqBodyValidator, createCourse);
-router.route('/course/update').put(emptyReqBodyValidator,editCourse);
-router.route('/course/delete').delete(emptyReqBodyValidator,deleteCourse);
+router.route('/course/update').put(emptyReqBodyValidator, editCourse);
+router.route('/course/delete').delete(emptyReqBodyValidator, deleteCourse);
 
 router.route('/class/read').get(fetchClass);
 router.route('/class/create').post(emptyReqBodyValidator, createClass);
@@ -79,6 +83,11 @@ router.route('/student/create').post(emptyReqBodyValidator, createStudent);
 router.route('/student/read').get(fetchStudents);
 router.route('/student/update').put(emptyReqBodyValidator, editStudent);
 router.route('/student/delete').delete(emptyReqBodyValidator, deleteStudent);
+
+router.route('/allotment/create').post(emptyReqBodyValidator, createClassAllotment);
+router.route('/allotment/read').get(fetchClassAllotments);
+// router.route('/allotment/update').put(emptyReqBodyValidator, editStudent);
+// router.route('/allotment/delete').delete(emptyReqBodyValidator, deleteStudent);
 
 router.route('/timetable/create').post(createTimetable);
 router.route('/timetable/read').get(fetchTimetables);

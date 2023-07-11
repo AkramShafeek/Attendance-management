@@ -3,7 +3,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { depts, faculty } from "../sampleData";
 import { useDispatch } from "react-redux";
-import { selectFaculty, openEditModal } from "../../../redux/features/facultySlice";
+import { selectFaculty, openEditModal, openDeleteModal } from "../../../redux/features/facultySlice";
 import { useTheme } from "@emotion/react";
 // import { selectStudent } from "../../redux/features/studentSlice";
 
@@ -32,7 +32,7 @@ const FacultyListItem = (props) => {
   return (
     list.map((faculty, index) =>
       <tr className="list-item" key={faculty._id}
-        onClick={() => handleSelectClick(faculty)}
+        onClick={() => dispatch(selectFaculty(faculty))}
         style={{ backgroundColor: index % 2 === 0 ? palette.neutral.light : 'transparent' }}>
         <td>
           <Avatar src={faculty.avatar}></Avatar>
@@ -58,12 +58,18 @@ const FacultyListItem = (props) => {
           </Typography>
         </td>
         <td style={{ marginRight: '10px', textAlign: 'right' }}>
-          <IconButton onClick={handleEditClick}>
+          <IconButton onClick={() => {
+            dispatch(selectFaculty(faculty));
+            dispatch(openEditModal());
+          }}>
             <Icon>
               <EditRoundedIcon color="secondary" />
             </Icon>
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => {
+            dispatch(selectFaculty(faculty));
+            dispatch(openDeleteModal());
+          }}>
             <Icon>
               <DeleteIcon color="error" />
             </Icon>

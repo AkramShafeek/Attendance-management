@@ -1,4 +1,5 @@
 const Faculty = require('../../models/Faculty');
+const Dept = require('../../models/Department');
 
 // add filters later
 const fetchFaculties = async (req, res) => {
@@ -11,12 +12,13 @@ const createFaculty = async (req, res) => {
   if (!req.body)
     throw new Error("Empty request body");
 
-  const facultyExists = await Faculty.findOne({ email: req.body.email });
+  const facultyExists = await Faculty.findOne({ $or: [{ empid: req.body.empid }, { email: req.body.email }] });
   if (facultyExists)
     throw new Error('Faculty already exists');
 
   const newFaculty = await Faculty.create(req.body);
-  res.status(200).send(newFaculty);
+  const response = await Faculty.findById(newFaculty._id).populate('dept');
+  res.status(200).send(response);
 }
 
 const editFaculty = async (req, res) => {
@@ -30,6 +32,8 @@ const editFaculty = async (req, res) => {
 
   if (!updatedFaculty)
     throw new Error("User doesn't exist");
+
+  await Dept.populate(updatedFaculty, { path: 'dept' });
 
   res.status(200).send(updatedFaculty);
 }

@@ -1,20 +1,23 @@
 import { Box, Icon, IconButton, TextField, Typography, Modal, Button } from "@mui/material";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { faculty } from "./sampleData";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { closeEditModal, loadFaculty } from "../../redux/features/facultySlice";
+import { closeDeleteModal, closeEditModal, loadFaculty, removeFaculty } from "../../redux/features/facultySlice";
 import FacultyListItem from "./list renderers/FacultyListItem";
 import FacultyCreateModal from "./modals/FacultyCreateModal";
 import FacultyEditModal from "./modals/FacultyEditModal";
-import { fetchFacultyApi } from "../../apis/database api/faculty";
+import { deleteFacultyApi, fetchFacultyApi } from "../../apis/database api/faculty";
+import DeletionConfirmationModal from "./modals/DeletionConfirmationModal";
 
 
 const Faculty = () => {
 
   const selectedFaculty = useSelector((store) => store.faculty.selectedFaculty);
   const isEditModalOpen = useSelector((store) => store.faculty.isEditModalOpen);
+  const isDeleteModalOpen = useSelector((store) => store.faculty.isDeleteModalOpen);
   const facultyList = useSelector((store) => store.faculty.facultyList);
   const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
   const dispatch = useDispatch();
@@ -23,6 +26,12 @@ const Faculty = () => {
     if (reason === 'backdropClick')
       return;
     dispatch(closeEditModal());
+  }
+
+  const handleDeleteModalClose = (event, reason) => {
+    if (reason === 'backdropClick')
+      return;
+    dispatch(closeDeleteModal());
   }
 
   const handleCreateModalClose = (event, reason) => {
@@ -71,7 +80,9 @@ const Faculty = () => {
       >
         <Box sx={modalStyle}>
           <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
-            <Button onClick={handleEditModalClose} color="secondary">close</Button>
+            <IconButton onClick={handleEditModalClose}>
+              <CloseRoundedIcon />
+            </IconButton>
           </div>
           <FacultyEditModal selectedFaculty={selectedFaculty} handleClose={handleEditModalClose} />
         </Box>
@@ -84,9 +95,26 @@ const Faculty = () => {
       >
         <Box sx={modalStyle}>
           <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
-            <Button onClick={handleCreateModalClose}>close</Button>
+            <IconButton onClick={handleCreateModalClose}>
+              <CloseRoundedIcon />
+            </IconButton>
           </div>
           <FacultyCreateModal handleClose={handleCreateModalClose} />
+        </Box>
+      </Modal>
+      <Modal
+        open={isDeleteModalOpen}
+        onClose={handleDeleteModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle} className="flex-column gap-2">
+          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
+            <IconButton onClick={handleDeleteModalClose}>
+              <CloseRoundedIcon />
+            </IconButton>
+          </div>
+          <DeletionConfirmationModal payload={selectedFaculty} deleteApi={deleteFacultyApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeFaculty} />
         </Box>
       </Modal>
       <table>

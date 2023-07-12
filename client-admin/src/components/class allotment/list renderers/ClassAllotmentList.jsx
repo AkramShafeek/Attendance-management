@@ -12,6 +12,7 @@ const ClassAllotmentList = (props) => {
   return (
     list.map((allotment, index) =>
       <tr key={allotment._id} className="list-item"
+        onClick={()=>dispatch(selectAllotment(allotment))}
         style={{ backgroundColor: index % 2 === 0 ? palette.neutral.light : 'transparent' }}>
         <td>
           <Typography sx={{ fontSize: 'small' }}>

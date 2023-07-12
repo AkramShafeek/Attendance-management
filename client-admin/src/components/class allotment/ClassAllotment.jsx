@@ -13,6 +13,7 @@ import { fetchApi } from "../../apis/class allotment api/api";
 import { loadAllotment } from "../../redux/features/allotmentSlice";
 import ClassAllotmentList from "./list renderers/ClassAllotmentList";
 import ClassAllotmentCreateModal from "./modals/ClassAllotmentCreateModal";
+import ClassAllotmentEditModal from "./modals/ClassAllotmentEditModal";
 // import DeletionConfirmationModal from "./modals/DeletionConfirmationModal";
 // import DeptEditModal from "./modals/DeptEditModal";
 
@@ -88,7 +89,7 @@ const ClassAllotment = () => {
             </IconButton>
           </div>
           {/* <DeptCreateModal handleClose={handleCreateModalClose} /> */}
-          <ClassAllotmentCreateModal handleClose={handleCreateModalClose} />          
+          <ClassAllotmentCreateModal handleClose={handleCreateModalClose} />
         </Box>
       </Modal>
       <Modal
@@ -120,7 +121,7 @@ const ClassAllotment = () => {
             </IconButton>
           </div>
           {/* <DeptEditModal selectedDept={selectedDept} handleClose={handleEditModalClose} /> */}
-          Edit modal
+          <ClassAllotmentEditModal selectedAllotment={selectedAllotment} handleClose={handleEditModalClose} />
         </Box>
       </Modal>
       <table>

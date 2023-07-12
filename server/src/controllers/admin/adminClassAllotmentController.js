@@ -61,16 +61,56 @@ const createClassAllotment = async (req, res) => {
 }
 
 const editClassAllotment = async (req, res) => {
+  console.log(req.body)
 
-  if (req.body.password)
-    delete req.body.password;
+  const { _id, dept, year, sem, section, courseCode, facultyDept, faculty } = req.body;
+  if (!_id)
+    throw new Error("Allotment id not provided");
 
-  const updatedClassAllotment = await ClassAllotment.findByIdAndUpdate(req.body._id, req.body, { new: true });
+  const classReference = await Class.findOne({ $and: [{ dept, year, sem, section }] });
+  if (!classReference)
+    throw new Error("Given class doesn't exist");
+
+  delete req.body.dept;
+  delete req.body.year;
+  delete req.body.sem;
+  delete req.body.section;
+
+  req.body.class = classReference._id;
+
+  const courseReference = await Course.findOne({ courseCode });
+  if (!courseReference)
+    throw new Error("Given course doesn't exist");
+
+  delete req.body.courseCode;
+
+  req.body.course = courseReference._id;
+
+  const facultyReference = await Faculty.findOne({ $and: [{ empid: faculty }, { dept: facultyDept }] });
+  if (!facultyReference)
+    throw new Error("Given faculty doesn't exist");
+
+  req.body.faculty = facultyReference._id;
+  console.log(req.body);
+
+  const classExists = await ClassAllotment.findOne({ $and: [{ class: req.body.class }, { course: req.body.course }, { faculty: req.body.faculty }] });
+  if (classExists)
+    throw new Error('Given allotment already exists');
+
+  const updatedClassAllotment = await ClassAllotment.findByIdAndUpdate(_id, req.body, { new: true });
 
   if (!updatedClassAllotment)
-    throw new Error("User doesn't exist");
+    throw new Error("Given allotment doesn't exist");
 
-  res.status(200).send(updatedClassAllotment);
+  const response = await ClassAllotment.findById(updatedClassAllotment._id)
+    .populate('class')
+    .populate('course')
+    .populate('faculty');
+  await Dept.populate(response, { path: 'class.dept' });
+  await Dept.populate(response, { path: 'faculty.dept' });
+  await Dept.populate(response, { path: 'course.dept' });
+
+  res.status(200).send(response);
 }
 
 const deleteClassAllotment = async (req, res) => {
@@ -78,6 +118,9 @@ const deleteClassAllotment = async (req, res) => {
     throw new Error("Empty request body");
 
   const deletedClassAllotment = await ClassAllotment.findByIdAndDelete(req.body._id);
+  if (!deleteClassAllotment)
+    throw new Error("Given allotment doesn't exist");
+
   res.status(200).send(deletedClassAllotment);
 }
 

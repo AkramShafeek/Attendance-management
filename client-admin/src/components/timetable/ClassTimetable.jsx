@@ -125,7 +125,7 @@ const ClassTimetable = () => {
         <Accordion expanded={false} disabled
           sx={{
             '&.Mui-disabled': {
-              color: 'white',
+              color: palette.primary.main,
               backgroundColor: 'transparent',
               opacity: 1,
             }
@@ -133,7 +133,7 @@ const ClassTimetable = () => {
           <AccordionSummary expandIcon={<ExpandMoreIcon style={{ color: "transparent" }} />}
             sx={{
               '&.Mui-disabled': {
-                color: 'white',
+                color: palette.neutral.dark,
                 backgroundColor: 'transparent',
                 opacity: 1,
               }

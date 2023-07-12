@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 // import DeptEditModal from "./modals/DeptEditModal";
 import { facultyttlist } from "./sampleData";
 import FacultyTimetableList from "./list renderers/FacultyTimetableList";
+import { useTheme } from "@emotion/react";
 
 const FacultyTimetable = () => {
 
@@ -23,7 +24,7 @@ const FacultyTimetable = () => {
   // const deptList = useSelector((store) => store.dept.deptList);
   // const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const { palette } = useTheme();
   // const handleEditModalClose = (event, reason) => {
   //   if (reason === 'backdropClick')
   //     return;
@@ -73,7 +74,7 @@ const FacultyTimetable = () => {
   }
 
   return (
-    <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>      
+    <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>
       {/* <Modal
         open={isCreateModalOpen}
         onClose={handleCreateModalClose}
@@ -131,7 +132,7 @@ const FacultyTimetable = () => {
           <AccordionSummary expandIcon={<ExpandMoreIcon style={{ color: "transparent" }} />}
             sx={{
               '&.Mui-disabled': {
-                color: 'white',
+                color: palette.neutral.dark,
                 backgroundColor: 'transparent',
                 opacity: 1,
               }
@@ -146,7 +147,7 @@ const FacultyTimetable = () => {
                 <Typography sx={{ fontWeight: 'bold' }}>
                   Faculty
                 </Typography>
-              </div>              
+              </div>
               <div className="col" style={{ marginRight: '10px', textAlign: 'right' }}>
                 <Typography sx={{ fontWeight: 'bold' }}>
                   Action

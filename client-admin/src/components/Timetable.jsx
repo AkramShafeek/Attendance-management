@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { selectMenu } from "../redux/features/menuSlice";
 import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import ClassTimetable from "./timetable/ClassTimetable";
+import FacultyTimetable from "./timetable/FacultyTimetable";
 
 const Timetable = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -29,8 +31,8 @@ const Timetable = () => {
         </Box>
         <Divider />
         <Box>
-          {tabValue === 0 && <div>Class timetable</div>}
-          {tabValue === 1 && <div>Faculty timetable</div>}          
+          {tabValue === 0 && <ClassTimetable />}
+          {tabValue === 1 && <FacultyTimetable />}          
         </Box>
       </Box>
       <Box className="sub" sx={{ backgroundColor: palette.background.alt, borderRadius: '10px' }}>

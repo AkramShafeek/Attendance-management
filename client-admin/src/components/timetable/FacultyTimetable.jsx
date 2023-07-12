@@ -1,7 +1,8 @@
-import { Box, Button, Icon, IconButton, Modal, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionSummary, Box, Button, Icon, IconButton, Modal, TextField, Typography } from "@mui/material";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import { depts } from "./sampleData";
 // import DeptListItem from "./list renderers/DeptListItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -118,28 +119,44 @@ const FacultyTimetable = () => {
           <DeptEditModal selectedDept={selectedDept} handleClose={handleEditModalClose} />
         </Box>
       </Modal> */}
-      <table>
-        <tbody>
-          <tr className='list-item header'>
-            <td>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Dept
-              </Typography>
-            </td>
-            <td>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Faculty
-              </Typography>
-            </td>            
-            <td style={{ marginRight: '10px', textAlign: 'right' }}>
-              <Typography sx={{ fontWeight: 'bold', marginRight: '15px' }}>
-                Action
-              </Typography>
-            </td>
-          </tr>
-          <FacultyTimetableList list={facultyttlist} />
-        </tbody>
-      </table>
+      <div className="timetable-list-container flex-column">
+        <Accordion expanded={false} disabled
+          sx={{
+            '&.Mui-disabled': {
+              color: 'white',
+              backgroundColor: 'transparent',
+              opacity: 1,
+            }
+          }}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon style={{ color: "transparent" }} />}
+            sx={{
+              '&.Mui-disabled': {
+                color: 'white',
+                backgroundColor: 'transparent',
+                opacity: 1,
+              }
+            }}>
+            <div className="row flex-row gap-2">
+              <div className="col">
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Dept
+                </Typography>
+              </div>
+              <div className="col">
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Faculty
+                </Typography>
+              </div>              
+              <div className="col" style={{ marginRight: '10px', textAlign: 'right' }}>
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Action
+                </Typography>
+              </div>
+            </div>
+          </AccordionSummary>
+        </Accordion>
+        <FacultyTimetableList list={facultyttlist} />
+      </div>
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => { }}>
         <AddIcon />
       </Fab>

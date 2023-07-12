@@ -1,6 +1,7 @@
-import { Box, Button, Icon, IconButton, Modal, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionSummary, Box, Button, Icon, IconButton, Modal, TextField, Typography } from "@mui/material";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 // import { depts } from "./sampleData";
 // import DeptListItem from "./list renderers/DeptListItem";
@@ -13,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import DeptEditModal from "./modals/DeptEditModal";
 import { classttlist } from "./sampleData";
 import ClassTimetableList from "./list renderers/ClassTimetableList";
+import { useTheme } from "@emotion/react";
 
 const ClassTimetable = () => {
 
@@ -22,6 +24,7 @@ const ClassTimetable = () => {
   // const deptList = useSelector((store) => store.dept.deptList);
   // const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const { palette } = useTheme();
 
   // const handleEditModalClose = (event, reason) => {
   //   if (reason === 'backdropClick')
@@ -72,7 +75,7 @@ const ClassTimetable = () => {
   }
 
   return (
-    <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>      
+    <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>
       {/* <Modal
         open={isCreateModalOpen}
         onClose={handleCreateModalClose}
@@ -118,42 +121,58 @@ const ClassTimetable = () => {
           <DeptEditModal selectedDept={selectedDept} handleClose={handleEditModalClose} />
         </Box>
       </Modal> */}
-      <table>
-        <tbody>
-          <tr className='list-item header'>
-            <td>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Dept
-              </Typography>
-            </td>
-            <td>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Year
-              </Typography>
-            </td>
-            <td>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Sem
-              </Typography>
-            </td>
-            <td>
-              <Typography sx={{ fontWeight: 'bold' }}>
-                Section
-              </Typography>
-            </td>
-            <td style={{ marginRight: '10px', textAlign: 'right' }}>
-              <Typography sx={{ fontWeight: 'bold', marginRight: '15px' }}>
-                Action
-              </Typography>
-            </td>
-          </tr>
-          <ClassTimetableList list={classttlist} />
-        </tbody>
-      </table>
+      <div className="timetable-list-container flex-column">
+        <Accordion expanded={false} disabled
+          sx={{
+            '&.Mui-disabled': {
+              color: 'white',
+              backgroundColor: 'transparent',
+              opacity: 1,
+            }
+          }}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon style={{ color: "transparent" }} />}
+            sx={{
+              '&.Mui-disabled': {
+                color: 'white',
+                backgroundColor: 'transparent',
+                opacity: 1,
+              }
+            }}>
+            <div className="row flex-row gap-2">
+              <div className="col">
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Dept
+                </Typography>
+              </div>
+              <div className="col">
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Year
+                </Typography>
+              </div>
+              <div className="col">
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Sem
+                </Typography>
+              </div>
+              <div className="col">
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Section
+                </Typography>
+              </div>
+              <div className="col" style={{ marginRight: '10px', textAlign: 'right' }}>
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Action
+                </Typography>
+              </div>
+            </div>
+          </AccordionSummary>
+        </Accordion>
+        <ClassTimetableList list={classttlist} />
+      </div>
       <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => { }}>
         <AddIcon />
       </Fab>
-    </Box>
+    </Box >
   );
 }
 

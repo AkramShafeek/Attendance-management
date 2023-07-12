@@ -15,6 +15,7 @@ import { themeSettings } from './theme';
 import './styles/index.css';
 import './styles/list.css';
 import './styles/admin.css';
+import './styles/timetable.css';
 import { useSelector } from 'react-redux';
 
 function App() {

@@ -1,0 +1,15 @@
+.timetable-list-container {
+  margin-top: 15px;
+}
+
+.timetable-list-container .row {
+  padding: 10px 25px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.timetable-list-container .row .col {
+  flex: 1 0 18%;
+  text-align: left;
+  /* border: 1px solid aliceblue;   */
+}

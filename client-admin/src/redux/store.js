@@ -7,6 +7,7 @@ import deptReducer from "./features/deptSlice";
 import classReducer from "./features/classSlice";
 import courseReducer from "./features/courseSlice";
 import allotmentReducer from "./features/allotmentSlice";
+import timetableReduer from "./features/timetableSlice";
 
 import { combineReducers } from "@reduxjs/toolkit";
 import {
@@ -29,7 +30,8 @@ const reducers = combineReducers({
   class: classReducer,
   course: courseReducer,
   allotment: allotmentReducer,
-  mode: modeReducer
+  timetable: timetableReduer,
+  mode: modeReducer,
 });
 
 const persistConfig = { key: "root", storage, stateReconciler: autoMergeLevel2 };

@@ -6,7 +6,7 @@ import { depts } from "./sampleData";
 import DeptListItem from "./list renderers/DeptListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { closeDeleteModal, closeEditModal, loadDept } from "../../redux/features/deptSlice";
+import { closeDeleteModal, closeEditModal, loadDept } from "../../redux/features/classSlice";
 import DeptCreateModal from "./modals/DeptCreateModal";
 import { deleteDeptsApi, fetchDeptsApi } from "../../apis/database api/dept";
 import DeletionConfirmationModal from "./modals/DeletionConfirmationModal";

@@ -17,11 +17,11 @@ const Sidenav = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const menu = [
-    {
-      name: 'Calendar',
-      icon: <CalendarMonthIcon />,
-      link: 'calendar'
-    },
+    // {
+    //   name: 'Calendar',
+    //   icon: <CalendarMonthIcon />,
+    //   link: 'calendar'
+    // },
     {
       name: 'Database',
       icon: <StorageIcon />,
@@ -37,11 +37,11 @@ const Sidenav = () => {
       icon: <CalendarViewWeekIcon />,
       link: 'timetable'
     },
-    {
-      name: 'Signup Approval',
-      icon: <HowToRegIcon />,
-      link: 'approval'
-    },
+    // {
+    //   name: 'Signup Approval',
+    //   icon: <HowToRegIcon />,
+    //   link: 'approval'
+    // },
   ];
 
   const dispatchMenuSelection = (element) => {

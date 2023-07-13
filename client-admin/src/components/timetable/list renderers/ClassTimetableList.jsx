@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { openDeleteModal, openEditModal, selectDept } from "../../../redux/features/deptSlice";
 import { useState } from "react";
 import TimetableView from "../TimetableView";
+import { openEdit } from "../../../redux/features/timetableSlice";
 
 const ClassTimetableList = (props) => {
   const { list } = props;
@@ -43,7 +44,7 @@ const ClassTimetableList = (props) => {
               </Typography>
             </div>
             <div className="col" style={{ marginRight: '10px', textAlign: 'right' }}>
-              <IconButton onClick={() => { }}>
+              <IconButton onClick={() => { dispatch(openEdit()) }}>
                 <Icon>
                   <EditRoundedIcon color="secondary" />
                 </Icon>

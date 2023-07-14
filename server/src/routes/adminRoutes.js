@@ -91,10 +91,10 @@ router.route('/allotment/read').get(fetchClassAllotments);
 router.route('/allotment/update').put(emptyReqBodyValidator, editClassAllotment);
 router.route('/allotment/delete').delete(emptyReqBodyValidator, deleteClassAllotment);
 
-router.route('/timetable/create').post(createTimetable);
+router.route('/timetable/create').post(emptyReqBodyValidator,createTimetable);
 router.route('/timetable/read').get(fetchTimetables);
-router.route('/timetable/update').put(editTimetable);
-router.route('/timetable/delete').delete(deleteTimetable);
+router.route('/timetable/update').put(emptyReqBodyValidator,editTimetable);
+router.route('/timetable/delete').delete(emptyReqBodyValidator,deleteTimetable);
 
 router.route('/attendancestatus/create').post(emptyReqBodyValidator, createAttendanceStatus);
 router.route('/attendancestatus/read').get(emptyReqBodyValidator, fetchAttendanceStatuses);

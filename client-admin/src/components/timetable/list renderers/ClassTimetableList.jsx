@@ -25,22 +25,22 @@ const ClassTimetableList = (props) => {
           <div key={timetable._id} className="flex-row row gap-2">
             <div className="col">
               <Typography sx={{ fontSize: 'small' }}>
-                {timetable.dept}
+                {timetable.class.dept.deptId}
               </Typography>
             </div>
             <div className="col">
               <Typography sx={{ fontSize: 'small' }}>
-                {timetable.year}
+                {timetable.class.year}
               </Typography>
             </div>
             <div className="col">
               <Typography sx={{ fontSize: 'small' }}>
-                {timetable.sem}
+                {timetable.class.sem}
               </Typography>
             </div>
             <div className="col">
               <Typography sx={{ fontSize: 'small' }}>
-                {timetable.section}
+                {timetable.class.section}
               </Typography>
             </div>
             <div className="col" style={{ marginRight: '10px', textAlign: 'right' }}>

@@ -31,7 +31,7 @@ const Timetable = () => {
     console.log(result);
     if (result.destination == null)
       return;
-    if(result.destination.droppableId !== 'periodSection')
+    if (result.destination.droppableId !== 'periodSection')
       return;
     const items = periodsList;
     const [reorderedItem] = items.splice(result.source.index, 1);
@@ -42,33 +42,31 @@ const Timetable = () => {
 
   return (
     <Box className="content flex-row gap-1">
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Box className="main" sx={{
-          height: '100%',
-          position: 'relative',
-          backgroundColor: palette.background.alt,
-          borderRadius: '10px'
-        }}>
-          {!isEditOpen ?
-            <>
-              <Box>
-                <Tabs onChange={(event, value) => setTabValue(value)} value={tabValue}>
-                  <Tab label="Class timetables" value={0}></Tab>
-                  <Tab label="Faculty timetables" value={1}></Tab>
-                </Tabs>
-              </Box>
-              <Divider />
-              <Box>
-                {tabValue === 0 && <ClassTimetable />}
-                {tabValue === 1 && <FacultyTimetable />}
-              </Box>
-            </> :
-            <TimetableEdit />}
-        </Box>
-        <Box className="sub" sx={{ backgroundColor: palette.background.alt, borderRadius: '10px', overflowY: 'scroll' }}>
-          <PeriodSection periods={periodsList} />
-        </Box>
-      </DragDropContext>
+      <Box className="main" sx={{
+        height: '100%',
+        position: 'relative',
+        backgroundColor: palette.background.alt,
+        borderRadius: '10px'
+      }}>
+        {!isEditOpen ?
+          <>
+            <Box>
+              <Tabs onChange={(event, value) => setTabValue(value)} value={tabValue}>
+                <Tab label="Class timetables" value={0}></Tab>
+                <Tab label="Faculty timetables" value={1}></Tab>
+              </Tabs>
+            </Box>
+            <Divider />
+            <Box sx={{height: '80%',overflowY:'scroll'}}>
+              {tabValue === 0 && <ClassTimetable />}
+              {tabValue === 1 && <FacultyTimetable />}
+            </Box>
+          </> :
+          <TimetableEdit />}
+      </Box>
+      <Box className="sub" sx={{ backgroundColor: palette.background.alt, borderRadius: '10px', overflowY: 'scroll' }}>
+        {/* <PeriodSection periods={periodsList} /> */}
+      </Box>
     </Box >
   );
 }

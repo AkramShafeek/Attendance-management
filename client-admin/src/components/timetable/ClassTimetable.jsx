@@ -15,6 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { classttlist } from "./sampleData";
 import ClassTimetableList from "./list renderers/ClassTimetableList";
 import { useTheme } from "@emotion/react";
+import { useEffect, useState } from "react";
+import TimetableCreateModal from "./modals/TimetableCreateModal";
+import { fetchApi } from "../../apis/timetable api/api";
+import { loadTimetable } from "../../redux/features/timetableSlice";
 
 const ClassTimetable = () => {
 
@@ -22,7 +26,8 @@ const ClassTimetable = () => {
   // const isDeleteModalOpen = useSelector((store) => store.dept.isDeleteModalOpen);
   // const selectedDept = useSelector((store) => store.dept.selectedDept);
   // const deptList = useSelector((store) => store.dept.deptList);
-  // const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const timetableList = useSelector((store) => store.timetable.timetableList);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { palette } = useTheme();
 
@@ -38,24 +43,30 @@ const ClassTimetable = () => {
   //   dispatch(closeDeleteModal());
   // }
 
-  // const handleCreateModalClose = (event, reason) => {
-  //   if (reason === 'backdropClick')
-  //     return;
-  //   setIsCreateModalOpen(false);
-  // }
+  const handleCreateModalClose = (event, reason) => {
+    if (reason === 'backdropClick')
+      return;
+    setIsCreateModalOpen(false);
+  }
 
-  // const fetchDepts = async () => {
-  //   try {
-  //     const response = await fetchDeptsApi();
-  //     dispatch(loadDept(response.data));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  const fetchClassTimetables = async () => {
+    try {
+      const response = await fetchApi();
+      dispatch(loadTimetable(response.data));
+      console.log("got timetables from db");
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    console.log("From redux");
+    console.log(timetableList);
+  }, [timetableList]);
 
-  // useEffect(() => {
-  //   fetchDepts();
-  // }, []);
+  useEffect(() => {
+    fetchClassTimetables();
+  }, []);
 
   const modalStyle = {
     position: 'absolute',
@@ -76,7 +87,7 @@ const ClassTimetable = () => {
 
   return (
     <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>
-      {/* <Modal
+      <Modal
         open={isCreateModalOpen}
         onClose={handleCreateModalClose}
         aria-labelledby="modal-modal-title"
@@ -88,10 +99,11 @@ const ClassTimetable = () => {
               <CloseRoundedIcon />
             </IconButton>
           </div>
-          <DeptCreateModal handleClose={handleCreateModalClose} />
+          <TimetableCreateModal />
+          {/* <DeptCreateModal handleClose={handleCreateModalClose} /> */}
         </Box>
       </Modal>
-      <Modal
+      {/* <Modal
         open={isDeleteModalOpen}
         onClose={handleDeleteModalClose}
         aria-labelledby="modal-modal-title"
@@ -105,7 +117,7 @@ const ClassTimetable = () => {
           </div>
           <DeletionConfirmationModal payload={selectedDept} deleteApi={deleteDeptsApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeDept}/>
         </Box>
-      </Modal>
+       </Modal>
       <Modal
         open={isEditModalOpen}
         onClose={handleEditModalClose}
@@ -167,9 +179,9 @@ const ClassTimetable = () => {
             </div>
           </AccordionSummary>
         </Accordion>
-        <ClassTimetableList list={classttlist} />
+        <ClassTimetableList list={timetableList} />
       </div>
-      <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => { }}>
+      <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => { setIsCreateModalOpen(true) }}>
         <AddIcon />
       </Fab>
     </Box >

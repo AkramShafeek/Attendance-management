@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  classList: [],
+  timetableList: [],
   selectedPeriod: null,
   isEditOpen: false,
   isPeriodEditOpen: false,
@@ -13,26 +13,26 @@ const timetableSlice = createSlice({
   name: 'timetable',
   initialState,
   reducers: {
-    loadClass: (state, action) => {
-      state.classList = action.payload;
+    loadTimetable: (state, action) => {
+      state.timetableList = action.payload;
     },
     selectPeriod: (state, action) => {
       state.selectedPeriod = action.payload;
     },
-    addClass: (state, action) => {
+    addTimetable: (state, action) => {
       var found = false;
-      state.classList.forEach((element, index) => {
+      state.timetableList.forEach((element, index) => {
         if (element._id === action.payload._id) {
           found = true;
-          state.classList[index] = action.payload;
+          state.timetableList[index] = action.payload;
         }
       })
       if (!found)
-        state.classList.push(action.payload);
+        state.timetableList.push(action.payload);
     },
     removeClass: (state, action) => {
-      const newList = state.classList.filter((element) => element._id !== action.payload._id);
-      state.classList = newList;
+      const newList = state.timetableList.filter((element) => element._id !== action.payload._id);
+      state.timetableList = newList;
     },
     openEdit: (state, action) => {
       state.isEditOpen = true;
@@ -56,9 +56,9 @@ const timetableSlice = createSlice({
 });
 
 export const {
-  loadClass,
+  loadTimetable,
   selectPeriod,
-  addClass,
+  addTimetable,
   removeClass,
   openEdit,
   closeEdit,

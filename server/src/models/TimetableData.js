@@ -2,40 +2,48 @@ const mongoose = require('mongoose');
 
 const daySchema = mongoose.Schema({
   _1: {
-    type: String,
-    default: ""
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",
+    default: null    
+
   },
   _2: {
-    type: String,
-    default: ""
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",
+    default: null    
   },
   _3: {
-    type: String,
-    default: ""
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",
+    default: null    
   },
   _4: {
-    type: String,
-    default: "SHORT BREAK"
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",
+    default: null    
   },
   _5: {
-    type: String,
-    default: ""
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",
+    default: null    
   },
   _6: {
-    type: String,
-    default: ""
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",
+    default: null    
   },
   _7: {
-    type: String,
-    default: "LUNCH BREAK"
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",
+    default: null    
   },
   _8: {
-    type: String,
-    default: ""
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",    
   },
   _9: {
-    type: String,
-    default: ""
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "classAllotments",    
   },
 })
 

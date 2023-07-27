@@ -6,6 +6,7 @@ import TimetableDroppable from './TimetableEditor';
 import PeriodEditModal from './modals/PeriodEditModal';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import TimetableEditor from './TimetableEditor';
+import { useState } from 'react';
 
 const modalStyle = {
   position: 'absolute',
@@ -18,8 +19,11 @@ const modalStyle = {
   p: 4,
 };
 
-const TimetableEdit = () => {
+const TimetableEditSection = () => {
   const isPeriodEditOpen = useSelector((store) => store.timetable.isPeriodEditOpen);
+  const selectedTimetable = useSelector((store) => store.timetable.selectedTimetable);
+
+  const [selectedPeriod, setSelectedPeriod] = useState({});
   const dispatch = useDispatch();
 
   const handlePeriodEditClose = (event, reason) => {
@@ -46,14 +50,14 @@ const TimetableEdit = () => {
               <CloseRoundedIcon />
             </IconButton>
           </div>
-          <PeriodEditModal />
+          <PeriodEditModal selectedPeriod={selectedPeriod} handleClose={handlePeriodEditClose}/>
         </Box>
       </Modal>
       <div className='flex-row justify-content-center' style={{ width: '100%', marginTop: '4rem' }}>
-        <TimetableEditor />
+        <TimetableEditor selectedTimetable={selectedTimetable} setSelectedPeriod={setSelectedPeriod} />
       </div>
     </div>
   )
 }
 
-export default TimetableEdit;
+export default TimetableEditSection;

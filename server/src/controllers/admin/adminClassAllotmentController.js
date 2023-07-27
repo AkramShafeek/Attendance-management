@@ -6,7 +6,12 @@ const Course = require('../../models/Course');
 const Faculty = require('../../models/Faculty');
 // add filters later
 const fetchClassAllotments = async (req, res) => {
-  const classAllotments = await ClassAllotment.find()
+  const { _class, faculty } = req.query;
+  const queryObject = {};
+  if(_class)
+    queryObject.class = _class;
+  console.log(queryObject);
+  const classAllotments = await ClassAllotment.find(queryObject)
     .populate('class')
     .populate('faculty')
     .populate('course');

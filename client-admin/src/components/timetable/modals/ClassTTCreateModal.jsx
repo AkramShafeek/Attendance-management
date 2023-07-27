@@ -30,7 +30,7 @@ const MyInputText = (props) => {
   )
 }
 
-const TimetableCreateModal = ({ selectedClass, handleClose }) => {
+const ClassTTCreateModal = ({ selectedClass, handleClose }) => {
   const defaultErrMsg = 'Some error, please try again later';
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -127,4 +127,4 @@ const TimetableCreateModal = ({ selectedClass, handleClose }) => {
   )
 }
 
-export default TimetableCreateModal;
+export default ClassTTCreateModal;

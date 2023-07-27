@@ -10,15 +10,17 @@ import { useDispatch, useSelector } from "react-redux";
 // import { closeDeleteModal, closeEditModal, loadDept, removeDept } from "../../redux/features/deptSlice";
 // import DeptCreateModal from "./modals/DeptCreateModal";
 // import { deleteDeptsApi, fetchDeptsApi } from "../../apis/database api/dept";
-// import DeletionConfirmationModal from "./modals/DeletionConfirmationModal";
 // import DeptEditModal from "./modals/DeptEditModal";
+import DeleteConfirmationModal from "../database/modals/DeletionConfirmationModal";
 import { classttlist } from "./sampleData";
 import ClassTimetableList from "./list renderers/ClassTimetableList";
 import { useTheme } from "@emotion/react";
 import { useEffect, useState } from "react";
-import TimetableCreateModal from "./modals/TimetableCreateModal";
-import { fetchApi } from "../../apis/timetable api/api";
-import { loadTimetable } from "../../redux/features/timetableSlice";
+import TimetableCreateModal from "./modals/ClassTTCreateModal";
+import { deleteApi, fetchApi } from "../../apis/timetable api/api";
+import { closeDeleteModal, loadTimetable, removeTimetable } from "../../redux/features/timetableSlice";
+import ClassTTCreateModal from "./modals/ClassTTCreateModal";
+import DeletionConfirmationModal from "../database/modals/DeletionConfirmationModal";
 
 const ClassTimetable = () => {
 
@@ -27,9 +29,16 @@ const ClassTimetable = () => {
   // const selectedDept = useSelector((store) => store.dept.selectedDept);
   // const deptList = useSelector((store) => store.dept.deptList);
   const timetableList = useSelector((store) => store.timetable.timetableList);
+  const selectedTimetable = useSelector((store) => store.timetable.selectedTimetable);
+  const [deletePayload, setDeletePayload] = useState({ ...selectedTimetable, target: 'class' });
+  const isDeleteModalOpen = useSelector((store) => store.timetable.isDeleteModalOpen);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { palette } = useTheme();
+
+  useEffect(() => {
+    setDeletePayload({ ...selectedTimetable, target: 'class' });
+  }, [selectedTimetable]);
 
   // const handleEditModalClose = (event, reason) => {
   //   if (reason === 'backdropClick')
@@ -48,11 +57,17 @@ const ClassTimetable = () => {
       return;
     setIsCreateModalOpen(false);
   }
+  const handleDeleteModalClose = (event, reason) => {
+    if (reason === 'backdropClick')
+      return;
+    dispatch(closeDeleteModal());
+  }
 
   const fetchClassTimetables = async () => {
     try {
       const response = await fetchApi();
-      dispatch(loadTimetable(response.data));
+      if(response)
+        dispatch(loadTimetable(response.data));
       console.log("got timetables from db");
       console.log(response.data);
     } catch (error) {
@@ -90,8 +105,6 @@ const ClassTimetable = () => {
       <Modal
         open={isCreateModalOpen}
         onClose={handleCreateModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
           <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
@@ -99,11 +112,11 @@ const ClassTimetable = () => {
               <CloseRoundedIcon />
             </IconButton>
           </div>
-          <TimetableCreateModal />
+          <ClassTTCreateModal />
           {/* <DeptCreateModal handleClose={handleCreateModalClose} /> */}
         </Box>
       </Modal>
-      {/* <Modal
+      <Modal
         open={isDeleteModalOpen}
         onClose={handleDeleteModalClose}
         aria-labelledby="modal-modal-title"
@@ -115,24 +128,10 @@ const ClassTimetable = () => {
               <CloseRoundedIcon />
             </IconButton>
           </div>
-          <DeletionConfirmationModal payload={selectedDept} deleteApi={deleteDeptsApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeDept}/>
+          <DeletionConfirmationModal payload={deletePayload} deleteApi={deleteApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeTimetable} />
         </Box>
-       </Modal>
-      <Modal
-        open={isEditModalOpen}
-        onClose={handleEditModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={modalStyle} className="flex-column gap-2">
-          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
-            <IconButton onClick={handleEditModalClose}>
-              <CloseRoundedIcon />
-            </IconButton>
-          </div>
-          <DeptEditModal selectedDept={selectedDept} handleClose={handleEditModalClose} />
-        </Box>
-      </Modal> */}
+      </Modal>
+
       <div className="timetable-list-container flex-column">
         <Accordion expanded={false} disabled
           sx={{

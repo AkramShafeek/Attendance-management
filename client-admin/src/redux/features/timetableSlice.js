@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   timetableList: [],
+  selectedTimetable: null,
   selectedPeriod: null,
   isEditOpen: false,
   isPeriodEditOpen: false,
@@ -15,6 +16,9 @@ const timetableSlice = createSlice({
   reducers: {
     loadTimetable: (state, action) => {
       state.timetableList = action.payload;
+    },
+    selectTimetable: (state, action) => {
+      state.selectedTimetable = action.payload;
     },
     selectPeriod: (state, action) => {
       state.selectedPeriod = action.payload;
@@ -30,7 +34,7 @@ const timetableSlice = createSlice({
       if (!found)
         state.timetableList.push(action.payload);
     },
-    removeClass: (state, action) => {
+    removeTimetable: (state, action) => {
       const newList = state.timetableList.filter((element) => element._id !== action.payload._id);
       state.timetableList = newList;
     },
@@ -57,9 +61,10 @@ const timetableSlice = createSlice({
 
 export const {
   loadTimetable,
+  selectTimetable,
   selectPeriod,
   addTimetable,
-  removeClass,
+  removeTimetable,
   openEdit,
   closeEdit,
   openPeriodEdit,

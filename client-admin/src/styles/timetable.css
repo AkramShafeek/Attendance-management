@@ -65,6 +65,7 @@ div.col.break div:nth-child(1) {
 
 div.col.break div:nth-child(2) {
   flex: 1 0 85%;
+  text-align: center;  
 }
 
 .period-section {
@@ -86,6 +87,11 @@ div.period:hover{
   /* background-color: #49d87c; */
   border: 1px solid #49d87c;
   color: #49d87c;
+}
+
+div.period:active{
+  background-color: #49d87c;
+  color: white;
 }
 
 div.scale-period {

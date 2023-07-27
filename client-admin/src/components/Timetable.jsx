@@ -5,11 +5,11 @@ import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ClassTimetable from "./timetable/ClassTimetable";
 import FacultyTimetable from "./timetable/FacultyTimetable";
-import TimetableEdit from "./timetable/TimetableEdit";
 import { closeEdit } from "../redux/features/timetableSlice";
 import PeriodSection from "./timetable/PeriodSection";
 import { DragDropContext } from 'react-beautiful-dnd';
 import { periods } from "./timetable/sampleData";
+import TimetableEditSection from "./timetable/TimetableEditSection";
 
 
 const Timetable = () => {
@@ -62,7 +62,7 @@ const Timetable = () => {
               {tabValue === 1 && <FacultyTimetable />}
             </Box>
           </> :
-          <TimetableEdit />}
+          <TimetableEditSection />}
       </Box>
       <Box className="sub" sx={{ backgroundColor: palette.background.alt, borderRadius: '10px', overflowY: 'scroll' }}>
         {/* <PeriodSection periods={periodsList} /> */}

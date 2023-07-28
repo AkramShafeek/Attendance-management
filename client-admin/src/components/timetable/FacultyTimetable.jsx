@@ -15,14 +15,18 @@ import { useEffect, useState } from "react";
 import { facultyttlist } from "./sampleData";
 import FacultyTimetableList from "./list renderers/FacultyTimetableList";
 import { useTheme } from "@emotion/react";
+import FacultyTTCreateModal from "./modals/FacultyTTCreateModal";
+import { fetchApi } from "../../apis/timetable api/api";
+import { loadTimetable } from "../../redux/features/timetableSlice";
 
 const FacultyTimetable = () => {
 
+  const timetableList = useSelector((store) => store.timetable.timetableList);
   // const isEditModalOpen = useSelector((store) => store.dept.isEditModalOpen);
   // const isDeleteModalOpen = useSelector((store) => store.dept.isDeleteModalOpen);
   // const selectedDept = useSelector((store) => store.dept.selectedDept);
   // const deptList = useSelector((store) => store.dept.deptList);
-  // const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { palette } = useTheme();
   // const handleEditModalClose = (event, reason) => {
@@ -37,24 +41,26 @@ const FacultyTimetable = () => {
   //   dispatch(closeDeleteModal());
   // }
 
-  // const handleCreateModalClose = (event, reason) => {
-  //   if (reason === 'backdropClick')
-  //     return;
-  //   setIsCreateModalOpen(false);
-  // }
+  const handleCreateModalClose = (event, reason) => {
+    if (reason === 'backdropClick')
+      return;
+    setIsCreateModalOpen(false);
+  }
+  const fetchFacultyTimetables = async () => {
+    try {
+      const response = await fetchApi({ target: 'faculty' });
+      if (response)
+        dispatch(loadTimetable(response.data));
+      console.log("got timetables from db");
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  // const fetchDepts = async () => {
-  //   try {
-  //     const response = await fetchDeptsApi();
-  //     dispatch(loadDept(response.data));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchDepts();
-  // }, []);
+  useEffect(() => {
+    fetchFacultyTimetables();
+  }, []);
 
   const modalStyle = {
     position: 'absolute',
@@ -75,7 +81,7 @@ const FacultyTimetable = () => {
 
   return (
     <Box className="flex-column gap-1 pad-1" style={{ width: '100%', boxSizing: 'border-box' }}>
-      {/* <Modal
+      <Modal
         open={isCreateModalOpen}
         onClose={handleCreateModalClose}
         aria-labelledby="modal-modal-title"
@@ -87,40 +93,10 @@ const FacultyTimetable = () => {
               <CloseRoundedIcon />
             </IconButton>
           </div>
-          <DeptCreateModal handleClose={handleCreateModalClose} />
+          <FacultyTTCreateModal />
         </Box>
       </Modal>
-      <Modal
-        open={isDeleteModalOpen}
-        onClose={handleDeleteModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={modalStyle} className="flex-column gap-2">
-          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
-            <IconButton onClick={handleDeleteModalClose}>
-              <CloseRoundedIcon />
-            </IconButton>
-          </div>
-          <DeletionConfirmationModal payload={selectedDept} deleteApi={deleteDeptsApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeDept}/>
-        </Box>
-      </Modal>
-      <Modal
-        open={isEditModalOpen}
-        onClose={handleEditModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={modalStyle} className="flex-column gap-2">
-          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
-            <IconButton onClick={handleEditModalClose}>
-              <CloseRoundedIcon />
-            </IconButton>
-          </div>
-          <DeptEditModal selectedDept={selectedDept} handleClose={handleEditModalClose} />
-        </Box>
-      </Modal> */}
-      <div className="timetable-list-container flex-column">
+      <div className="timetable-list-container flex-column" >
         <Accordion expanded={false} disabled
           sx={{
             '&.Mui-disabled': {
@@ -156,12 +132,12 @@ const FacultyTimetable = () => {
             </div>
           </AccordionSummary>
         </Accordion>
-        <FacultyTimetableList list={facultyttlist} />
-      </div>
-      <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => { }}>
+        <FacultyTimetableList list={timetableList} />
+      </ div>
+      <Fab color="primary" aria-label="add" sx={fabStyle} onClick={() => { setIsCreateModalOpen(true) }}>
         <AddIcon />
       </Fab>
-    </Box>
+    </Box >
   );
 }
 

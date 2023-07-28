@@ -23,12 +23,12 @@ const FacultyTimetableList = (props) => {
           <div key={timetable._id} className="flex-row row gap-2">
             <div className="col">
               <Typography sx={{ fontSize: 'small' }}>
-                {timetable.dept}
+                {timetable.faculty?.dept?.deptId}
               </Typography>
             </div>
             <div className="col">
               <Typography sx={{ fontSize: 'small' }}>
-                {timetable.faculty}
+                {timetable.faculty?.firstname} {timetable.faculty?.lastname}
               </Typography>
             </div>            
             <div className="col" style={{ marginRight: '10px', textAlign: 'right' }}>

@@ -10,13 +10,22 @@ const Faculty = require('../../models/Faculty');
 // add filters later
 const fetchTimetables = async (req, res) => {
   console.log('reached request');
-  const { _class, faculty } = req.query;
+  const { _class, faculty, target } = req.query;
+  if (!target)
+    throw new Error("Target not specified");
+
+  var Target;
+  if (target === 'class')
+    Target = ClassTT;
+  else
+    Target = FacultyTT;
+
   const queryObject = {};
   if (_class)
     queryObject.class = _class;
 
-  const timetables = await ClassTT.find(queryObject).populate('class');
-  await Dept.populate(timetables, { path: 'class.dept' });
+  const timetables = await Target.find(queryObject).populate(target);
+  await Dept.populate(timetables, { path: `${target}.dept` });
   await Timetable.populate(timetables, { path: 'data' });
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   for (let day of days) {
@@ -45,14 +54,24 @@ const createTimetable = async (req, res) => {
   let Target;
   if (req.body.target === 'faculty') {
     Target = FacultyTT;
-    // Target.faculty = req.body.faculty;
+    if (!req.body.facultyId)
+      throw new Error("Faculty id not provided");
+    const facultyRef = await Faculty.findOne({ empid: req.body.facultyId });
+    if (!facultyRef)
+      throw new Error("Faculty doesn't exist");
+    const existingTT = await FacultyTT.findOne({ faculty: facultyRef._id });
+    if (existingTT)
+      throw new Error("Timetable already exists");
+    payload.faculty = facultyRef._id;
+    Target = FacultyTT;
   }
   else if (req.body.target === 'class') {
     const { dept, year, sem, section } = req.body;
     const classRef = await Class.findOne({ $and: [{ dept, sem, year, section }] });
     if (!classRef)
       throw new Error("Class not available");
-    const existingTT = await ClassTT.findOne({ class: classRef });
+    console.log(classRef);
+    const existingTT = await ClassTT.findOne({ class: classRef._id });
     if (existingTT)
       throw new Error("Timetable already exists");
     payload.class = classRef;
@@ -79,10 +98,16 @@ const createTimetable = async (req, res) => {
 
   const response = await Target.findById(newTimetable._id);
   if (req.body.target === 'class') {
-    await Class.populate(response, { path: 'class' });
+    await Class.populate(response, { path: 'class' }).select('-password');
     await Dept.populate(response, { path: 'class.dept' });
   }
-
+  else {
+    await Faculty.populate(response, { path: 'faculty' });
+    await Dept.populate(response, { path: 'faculty.dept' });
+    // delete response.faculty.password;
+    response.faculty.password = undefined;
+  }
+  console.log(response);
   // return response
   res.status(200).send(response);
 }
@@ -107,18 +132,18 @@ const editTimetable = async (req, res) => {
     throw new Error("Invalid period");
 
   // const periodPath = `${day}.${period}`
-  const timetableDoc = await Timetable.findByIdAndUpdate(timetable, { [`${day}.${period}`] : classAllotment }, { new: true });
+  const timetableDoc = await Timetable.findByIdAndUpdate(timetable, { [`${day}.${period}`]: classAllotment }, { new: true });
   // const timetableDoc = await Timetable.findById(timetable);
   if (!timetableDoc)
-  throw new Error("Give timetable doesn't exist");
+    throw new Error("Give timetable doesn't exist");
   // console.log(day);
   // // console.log(timetableDoc.);
   // timetableDoc[day][period] = classAllotment;
   // await timetableDoc.save();
 
-  const responseTimetable = await ClassTT.findOne({class: req.body.class}).populate('class');
+  const responseTimetable = await ClassTT.findOne({ class: req.body.class }).populate('class');
   await Dept.populate(responseTimetable, { path: 'class.dept' });
-  await Timetable.populate(responseTimetable, { path: 'data' });  
+  await Timetable.populate(responseTimetable, { path: 'data' });
   for (let day of days) {
     for (let i = 1; i <= 9; i++) {
       // populate each period in each day;

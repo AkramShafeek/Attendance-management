@@ -1,9 +1,15 @@
 import { adminRootUrl } from "../config";
 import axios from "axios";
 
-export const fetchApi = async () => {
+export const fetchApi = async (query) => {
   try {
-    const response = await axios.get(`${adminRootUrl}/timetable/read`);
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
+      },
+      params: { ...query }
+    }
+    const response = await axios.get(`${adminRootUrl}/timetable/read`,config);
     return { success: true, data: response.data };
   } catch (error) {
     console.log(error);

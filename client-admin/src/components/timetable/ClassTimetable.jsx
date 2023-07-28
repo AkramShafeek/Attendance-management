@@ -40,18 +40,6 @@ const ClassTimetable = () => {
     setDeletePayload({ ...selectedTimetable, target: 'class' });
   }, [selectedTimetable]);
 
-  // const handleEditModalClose = (event, reason) => {
-  //   if (reason === 'backdropClick')
-  //     return;
-  //   dispatch(closeEditModal());
-  // }
-
-  // const handleDeleteModalClose = (event, reason) => {
-  //   if (reason === 'backdropClick')
-  //     return;
-  //   dispatch(closeDeleteModal());
-  // }
-
   const handleCreateModalClose = (event, reason) => {
     if (reason === 'backdropClick')
       return;
@@ -65,8 +53,8 @@ const ClassTimetable = () => {
 
   const fetchClassTimetables = async () => {
     try {
-      const response = await fetchApi();
-      if(response)
+      const response = await fetchApi({ target: 'class' });
+      if (response)
         dispatch(loadTimetable(response.data));
       console.log("got timetables from db");
       console.log(response.data);

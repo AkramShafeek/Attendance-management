@@ -38,7 +38,7 @@ const Database = () => {
           </Tabs>
         </Box>
         <Divider />
-        <Box>
+        <Box sx={{overflowY: 'scroll',height:'80%'}}>
           {tabValue === 0 && <Dept />}
           {tabValue === 1 && <Course />}
           {tabValue === 2 && <Class />}

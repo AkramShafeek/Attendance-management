@@ -8,8 +8,10 @@ const Faculty = require('../../models/Faculty');
 const fetchClassAllotments = async (req, res) => {
   const { _class, faculty } = req.query;
   const queryObject = {};
-  if(_class)
+  if (_class)
     queryObject.class = _class;
+  if (faculty)
+    queryObject.faculty = faculty;
   console.log(queryObject);
   const classAllotments = await ClassAllotment.find(queryObject)
     .populate('class')

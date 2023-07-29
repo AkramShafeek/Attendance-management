@@ -28,7 +28,7 @@ const Sidenav = () => {
       link: 'database'
     },
     {
-      name: 'Class',
+      name: 'Class Allotments',
       icon: <ClassIcon />,
       link: 'class'
     },
@@ -49,7 +49,7 @@ const Sidenav = () => {
   }
 
   return (
-    <div className="sidebar" style={{backgroundColor: palette.background.alt,borderRadius: '10px'}}>
+    <div className="sidebar" style={{ backgroundColor: palette.background.alt, borderRadius: '10px' }}>
       <Stack spacing={3} sx={{ marginTop: '30px' }}>
         {menu.map((element, index) => {
           return (
@@ -63,7 +63,10 @@ const Sidenav = () => {
                 "& .MuiTouchRipple-child": {
                   backgroundColor: 'none'
                 }
-              }} onClick={() => selectedMenu !== element.name && dispatchMenuSelection(element.name)}>
+              }} onClick={() => {
+                console.log(element.name);
+                selectedMenu !== element.name && dispatchMenuSelection(element.name)
+              }}>
                 <Icon style={{ color: selectedMenu === element.name ? "white" : "#919191" }}>
                   {element.icon}
                 </Icon>

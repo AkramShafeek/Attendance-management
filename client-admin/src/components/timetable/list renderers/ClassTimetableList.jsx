@@ -65,7 +65,7 @@ const ClassTimetableList = (props) => {
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <TimetableView />
+          <TimetableView selectedTimetable={timetable}/>
         </AccordionDetails>
       </Accordion>
     )

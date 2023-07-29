@@ -50,7 +50,7 @@ const PeriodEditModal = ({ selectedPeriod, handleClose }) => {
     // class allotment
     classAllotment: selectedPeriod.classAllotment ? selectedPeriod.classAllotment : "",
     // target
-    target: selectedPeriod.target,    
+    target: selectedPeriod.target,
     // class
     class: selectedPeriod.class,
     // faculty
@@ -67,17 +67,13 @@ const PeriodEditModal = ({ selectedPeriod, handleClose }) => {
 
   const handleSubmit = async (values) => {
     console.log(values);
-    // setShowStatus(true);
-    // setTimeout(()=>{
-    //   setShowStatus(false);
-    // },4000);
     var timeout;
     try {
       timeout = setTimeout(() => setIsLoading(true), 1000);
       const response = await editApi(values);
       if (response)
         dispatch(selectTimetable(response.data));
-        console.log(response.data);
+      console.log(response.data);
       setIsSuccess(true);
     } catch (error) {
       console.log(error);
@@ -112,7 +108,7 @@ const PeriodEditModal = ({ selectedPeriod, handleClose }) => {
                 <tbody>
                   <tr>
                     <td><Attribute>Class Allotment</Attribute></td>
-                    <td><ClassAllotmentDropdown selectedClass={selectedPeriod.class} name="classAllotment" /></td>
+                    <td><ClassAllotmentDropdown selectedClass={selectedPeriod.class} selectedFaculty={selectedPeriod.faculty} name="classAllotment" /></td>
                   </tr>
                 </tbody >
               </table >

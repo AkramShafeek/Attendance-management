@@ -9,7 +9,7 @@ const Class = () => {
   const [tabValue, setTabValue] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(selectMenu('Class'));
+    dispatch(selectMenu('Class Allotments'));
   }, []);
 
   const { palette } = useTheme();
@@ -28,7 +28,7 @@ const Class = () => {
           </Tabs>
         </Box>
         <Divider />
-        <Box>
+        <Box sx={{overflowY: 'scroll',height:'80%'}}>
           {tabValue === 0 && <ClassAllotment />}
         </Box>
       </Box>

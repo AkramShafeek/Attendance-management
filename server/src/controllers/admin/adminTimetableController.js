@@ -17,12 +17,16 @@ const fetchTimetables = async (req, res) => {
   var Target;
   if (target === 'class')
     Target = ClassTT;
-  else
+  else if (target === 'faculty')
     Target = FacultyTT;
+  else
+    throw new Error("Invalid target");
 
   const queryObject = {};
   if (_class)
     queryObject.class = _class;
+  if (faculty)
+    queryObject.faculty = faculty;
 
   const timetables = await Target.find(queryObject).populate(target);
   await Dept.populate(timetables, { path: `${target}.dept` });
@@ -35,10 +39,7 @@ const fetchTimetables = async (req, res) => {
       await Course.populate(timetables, { path: `data.${day}._${i}.course` });
       await Faculty.populate(timetables, { path: `data.${day}._${i}.faculty` });
     }
-  }
-  // await ClassAllotment.populate(timetables, { path: 'data.mon._1' });
-  // await Course.populate(timetables, { path: 'data.mon._1.course' });
-  // await Faculty.populate(timetables, { path: 'data.mon._1.faculty' });
+  }  
   console.log('reached response');
   res.status(200).send(timetables);
 }
@@ -78,15 +79,7 @@ const createTimetable = async (req, res) => {
     Target = ClassTT;
   }
   else
-    throw new Error("Invalid target");
-
-  // yet to implement already exists logic
-
-  const { targetData } = req.body;
-  const { timetableData } = req.body;
-
-  // if (!targetData || !timetableData)
-  //   throw new Error("Insufficient data");
+    throw new Error("Invalid target");  
 
   // first store time table data
   const newTimetableData = new Timetable();
@@ -113,11 +106,11 @@ const createTimetable = async (req, res) => {
 }
 
 const editTimetable = async (req, res) => {
-  // const updatedTimetable = await Timetable.findByIdAndUpdate(req.body._id, req.body, { new: true });
 
-  // if (!updatedTimetable)
-  //   throw new Error("User doesn't exist");
-  const { timetable, day, period, classAllotment } = req.body;
+  const { timetable, day, period, classAllotment, target, } = req.body;
+
+  if (target !== 'faculty' && target !== 'class')
+    throw new Error("Invalid target");
 
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   if (!days.includes(day))
@@ -131,19 +124,61 @@ const editTimetable = async (req, res) => {
   if (periodNum < 1 || periodNum > 9)
     throw new Error("Invalid period");
 
-  // const periodPath = `${day}.${period}`
+  // if target is class, I have to check for vacancy in
+  // the respective faculty's timetable  
+  if (target === 'class') {
+    const { faculty } = await ClassAllotment.findOne({ _id: classAllotment }).select('faculty');
+    const facultyTimetable = await FacultyTT.findOne({ faculty: faculty });
+    if(!facultyTimetable)
+      throw new Error("The respective faculty doesn't have a timetable, kindly create one before scheduling a class");
+    await Timetable.populate(facultyTimetable, { path: 'data' });
+    if (facultyTimetable.data[day][period] && facultyTimetable.data[day][period] !== classAllotment) {
+      const clashingAllotment = await ClassAllotment.findOne({ _id: facultyTimetable.data[day][period] })
+        .populate('class')
+        .populate('course')
+        .populate('faculty');
+        throw new Error(`Allotment clashing with Period: ${clashingAllotment.course.courseShortName} \nFaculty: ${clashingAllotment.faculty.firstname} \nin class ${clashingAllotment.class.sem} ${clashingAllotment.class.section}, kindly resolve`);
+    }
+    // no clash errors, changes can be reflected in
+    // respective faculty's timetable
+
+    // get the respective faculty's timetable
+    const updatedFacultyTT = await Timetable.findByIdAndUpdate(facultyTimetable.data._id,{ [`${day}.${period}`]: classAllotment }, { new: true });    
+  }
+
+  // if target is faculty, I have to check for vacancy in
+  // the respective class's timetable
+  else if (target === 'faculty') {
+    const classRef = await ClassAllotment.findOne({ _id: classAllotment }).select('class');
+    console.log(classRef)
+    const classTimetable = await ClassTT.findOne({ class: classRef.class });
+    if(!classTimetable)
+      throw new Error("The respective class doesn't have a timetable, kindly create one before scheduling a class");
+    await Timetable.populate(classTimetable, { path: 'data' });
+    if (classTimetable.data[day][period] && classTimetable.data[day][period] !== classAllotment) {
+      const clashingAllotment = await ClassAllotment.findOne({ _id: classTimetable.data[day][period] })
+        .populate('class')
+        .populate('course')
+        .populate('faculty');
+      throw new Error(`Allotment clashing with Period: ${clashingAllotment.course.courseShortName} \nFaculty: ${clashingAllotment.faculty.firstname} \nin class ${clashingAllotment.class.sem} ${clashingAllotment.class.section}, kindly resolve`);
+    }
+    // no clash errors, changes can be reflected in
+    // respective class's timetable
+    const updatedClassTT = await Timetable.findByIdAndUpdate(classTimetable.data._id,{ [`${day}.${period}`]: classAllotment }, { new: true });    
+  }
+
   const timetableDoc = await Timetable.findByIdAndUpdate(timetable, { [`${day}.${period}`]: classAllotment }, { new: true });
-  // const timetableDoc = await Timetable.findById(timetable);
   if (!timetableDoc)
     throw new Error("Given timetable doesn't exist");
-  // console.log(day);
-  // // console.log(timetableDoc.);
-  // timetableDoc[day][period] = classAllotment;
-  // await timetableDoc.save();
 
-  const responseTimetable = await ClassTT.findOne({ class: req.body.class }).populate('class');
-  await Dept.populate(responseTimetable, { path: 'class.dept' });
+  if (target === 'class')
+    responseTimetable = await ClassTT.findOne({ class: req.body.class }).populate('class');
+  else
+    responseTimetable = await FacultyTT.findOne({ faculty: req.body.faculty }).populate('faculty');
+
+  await Dept.populate(responseTimetable, { path: `${target}.dept` });
   await Timetable.populate(responseTimetable, { path: 'data' });
+
   for (let day of days) {
     for (let i = 1; i <= 9; i++) {
       // populate each period in each day;
@@ -157,7 +192,7 @@ const editTimetable = async (req, res) => {
   res.status(200).send(responseTimetable);
 }
 
-const deleteTimetable = async (req, res) => {  
+const deleteTimetable = async (req, res) => {
   // console.log(req.body);
   if (!req.body._id)
     throw new Error("Timetable id not provided");

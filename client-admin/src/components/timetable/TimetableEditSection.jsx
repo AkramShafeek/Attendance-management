@@ -54,7 +54,7 @@ const TimetableEditSection = () => {
         </Box>
       </Modal>
       <div className='flex-row justify-content-center' style={{ width: '100%', marginTop: '4rem' }}>
-        <TimetableEditor selectedTimetable={selectedTimetable} setSelectedPeriod={setSelectedPeriod} />
+        <TimetableEditor selectedTimetable={selectedTimetable} setSelectedPeriod={setSelectedPeriod} target={selectedTimetable.class ? 'class' : 'faculty'}/>
       </div>
     </div>
   )

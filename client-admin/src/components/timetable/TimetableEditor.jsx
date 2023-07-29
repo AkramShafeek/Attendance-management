@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { openPeriodEdit, selectPeriod } from "../../redux/features/timetableSlice";
 import { timetableData } from "./sampleData";
 
-const TimetableEditor = ({ selectedTimetable, setSelectedPeriod }) => {
+const TimetableEditor = ({ selectedTimetable, setSelectedPeriod, target }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
@@ -17,14 +17,14 @@ const TimetableEditor = ({ selectedTimetable, setSelectedPeriod }) => {
   const [timetableMatrix, setTimetableMatrix] = useState([]);
   const [data, setData] = useState(selectedTimetable.data);
 
-  useEffect(() => {  
+  useEffect(() => {
     console.log("I'm re rendered");
-    setData(selectedTimetable.data);    
+    setData(selectedTimetable.data);
   }, [selectedTimetable]);
 
-  useEffect(()=>{
+  useEffect(() => {
     renderTimetable();
-  },[data]);
+  }, [data]);
 
   const renderTimetable = () => {
     const timetableMatrixRender = [];
@@ -57,8 +57,13 @@ const TimetableEditor = ({ selectedTimetable, setSelectedPeriod }) => {
                 day: day,
                 period: '_' + i,
                 classAllotment: data[day]?.['_' + i]?._id,
-                class: selectedTimetable.class._id
+                target: target,
               }
+              if (target === 'class')
+                selectedPeriodData.class = selectedTimetable.class?._id;
+              else if (target === 'faculty')
+                selectedPeriodData.faculty = selectedTimetable.faculty?._id;
+
               setSelectedPeriod(selectedPeriodData);
               dispatch(selectPeriod(data[day]?.['_' + i]));
               dispatch(openPeriodEdit());

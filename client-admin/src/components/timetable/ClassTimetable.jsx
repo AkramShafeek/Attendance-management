@@ -30,14 +30,14 @@ const ClassTimetable = () => {
   // const deptList = useSelector((store) => store.dept.deptList);
   const timetableList = useSelector((store) => store.timetable.timetableList);
   const selectedTimetable = useSelector((store) => store.timetable.selectedTimetable);
-  const [deletePayload, setDeletePayload] = useState({ ...selectedTimetable, target: 'class' });
+  const [deletePayload, setDeletePayload] = useState({ _id: selectedTimetable._id, target: 'class' });
   const isDeleteModalOpen = useSelector((store) => store.timetable.isDeleteModalOpen);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { palette } = useTheme();
 
   useEffect(() => {
-    setDeletePayload({ ...selectedTimetable, target: 'class' });
+    setDeletePayload({ _id: selectedTimetable._id, target: 'class' });
   }, [selectedTimetable]);
 
   const handleCreateModalClose = (event, reason) => {

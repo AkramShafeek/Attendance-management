@@ -49,8 +49,12 @@ const PeriodEditModal = ({ selectedPeriod, handleClose }) => {
     period: selectedPeriod.period,
     // class allotment
     classAllotment: selectedPeriod.classAllotment ? selectedPeriod.classAllotment : "",
+    // target
+    target: selectedPeriod.target,    
     // class
-    class: selectedPeriod.class
+    class: selectedPeriod.class,
+    // faculty
+    faculty: selectedPeriod.faculty
   }
   const validateSchema = yup.object().shape({
     timetable: yup.string().required("required"),
@@ -62,7 +66,7 @@ const PeriodEditModal = ({ selectedPeriod, handleClose }) => {
   }, []);
 
   const handleSubmit = async (values) => {
-    // console.log(values);
+    console.log(values);
     // setShowStatus(true);
     // setTimeout(()=>{
     //   setShowStatus(false);
@@ -73,7 +77,7 @@ const PeriodEditModal = ({ selectedPeriod, handleClose }) => {
       const response = await editApi(values);
       if (response)
         dispatch(selectTimetable(response.data));
-        // console.log(response.data);
+        console.log(response.data);
       setIsSuccess(true);
     } catch (error) {
       console.log(error);

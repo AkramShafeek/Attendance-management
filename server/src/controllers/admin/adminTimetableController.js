@@ -98,7 +98,7 @@ const createTimetable = async (req, res) => {
 
   const response = await Target.findById(newTimetable._id);
   if (req.body.target === 'class') {
-    await Class.populate(response, { path: 'class' }).select('-password');
+    await Class.populate(response, { path: 'class' });
     await Dept.populate(response, { path: 'class.dept' });
   }
   else {
@@ -135,7 +135,7 @@ const editTimetable = async (req, res) => {
   const timetableDoc = await Timetable.findByIdAndUpdate(timetable, { [`${day}.${period}`]: classAllotment }, { new: true });
   // const timetableDoc = await Timetable.findById(timetable);
   if (!timetableDoc)
-    throw new Error("Give timetable doesn't exist");
+    throw new Error("Given timetable doesn't exist");
   // console.log(day);
   // // console.log(timetableDoc.);
   // timetableDoc[day][period] = classAllotment;
@@ -157,22 +157,28 @@ const editTimetable = async (req, res) => {
   res.status(200).send(responseTimetable);
 }
 
-const deleteTimetable = async (req, res) => {
-  // if (!req.body || !req.body._id)
-  //   throw new Error("Empty request body");
-  console.log(req.body);
-  if (!req.body._id || !req.body.data)
+const deleteTimetable = async (req, res) => {  
+  // console.log(req.body);
+  if (!req.body._id)
     throw new Error("Timetable id not provided");
   if (!req.body.target)
     throw new Error("target not provided");
 
-  if (req.body.target === 'class') {
-    const deletedClassTT = await ClassTT.deleteOne({ _id: req.body._id });
-    if (!deletedClassTT)
-      throw new Error("Timetable doesn't exist");
+  var Target;
 
-    res.status(200).send(deletedClassTT);
-  }
+  if (req.body.target === 'class')
+    Target = ClassTT;
+  else if (req.body.target === 'faculty')
+    Target = FacultyTT;
+  else
+    throw new Error("Invalid target");
+
+  const deletedClassTT = await Target.deleteOne({ _id: req.body._id });
+
+  if (!deletedClassTT)
+    throw new Error("Timetable doesn't exist");
+
+  res.status(200).send(deletedClassTT);
 }
 
 module.exports = {

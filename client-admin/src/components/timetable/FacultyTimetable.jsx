@@ -16,16 +16,16 @@ import { facultyttlist } from "./sampleData";
 import FacultyTimetableList from "./list renderers/FacultyTimetableList";
 import { useTheme } from "@emotion/react";
 import FacultyTTCreateModal from "./modals/FacultyTTCreateModal";
-import { fetchApi } from "../../apis/timetable api/api";
-import { loadTimetable } from "../../redux/features/timetableSlice";
+import { deleteApi, fetchApi } from "../../apis/timetable api/api";
+import { closeDeleteModal, loadTimetable, removeTimetable } from "../../redux/features/timetableSlice";
+import DeletionConfirmationModal from "../database/modals/DeletionConfirmationModal";
 
 const FacultyTimetable = () => {
 
   const timetableList = useSelector((store) => store.timetable.timetableList);
-  // const isEditModalOpen = useSelector((store) => store.dept.isEditModalOpen);
-  // const isDeleteModalOpen = useSelector((store) => store.dept.isDeleteModalOpen);
-  // const selectedDept = useSelector((store) => store.dept.selectedDept);
-  // const deptList = useSelector((store) => store.dept.deptList);
+  const selectedTimetable = useSelector((store) => store.timetable.selectedTimetable);  
+  const isDeleteModalOpen = useSelector((store) => store.timetable.isDeleteModalOpen);  
+  const [deletePayload, setDeletePayload] = useState({ _id: selectedTimetable._id, target: 'faculty' });
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { palette } = useTheme();
@@ -35,11 +35,15 @@ const FacultyTimetable = () => {
   //   dispatch(closeEditModal());
   // }
 
-  // const handleDeleteModalClose = (event, reason) => {
-  //   if (reason === 'backdropClick')
-  //     return;
-  //   dispatch(closeDeleteModal());
-  // }
+  useEffect(() => {
+    setDeletePayload({ _id: selectedTimetable._id, target: 'faculty' });
+  }, [selectedTimetable]);
+
+  const handleDeleteModalClose = (event, reason) => {
+    if (reason === 'backdropClick')
+      return;
+    dispatch(closeDeleteModal());
+  }
 
   const handleCreateModalClose = (event, reason) => {
     if (reason === 'backdropClick')
@@ -94,6 +98,21 @@ const FacultyTimetable = () => {
             </IconButton>
           </div>
           <FacultyTTCreateModal />
+        </Box>
+      </Modal>
+      <Modal
+        open={isDeleteModalOpen}
+        onClose={handleDeleteModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle} className="flex-column gap-2">
+          <div className="flex-row" style={{ justifyContent: 'flex-end' }}>
+            <IconButton onClick={handleDeleteModalClose}>
+              <CloseRoundedIcon />
+            </IconButton>
+          </div>
+          <DeletionConfirmationModal payload={deletePayload} deleteApi={deleteApi} handleClose={handleDeleteModalClose} removeItemFromRedux={removeTimetable} />
         </Box>
       </Modal>
       <div className="timetable-list-container flex-column" >

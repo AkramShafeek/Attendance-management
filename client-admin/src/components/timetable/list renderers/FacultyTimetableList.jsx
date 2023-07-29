@@ -3,10 +3,10 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTheme } from "@emotion/react";
 import { useDispatch } from "react-redux";
-import { openDeleteModal, openEditModal, selectDept } from "../../../redux/features/deptSlice";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from "react";
 import TimetableView from "../TimetableView";
+import { openDeleteModal, openEdit, selectTimetable } from "../../../redux/features/timetableSlice";
 
 const FacultyTimetableList = (props) => {
   const { list } = props;
@@ -30,14 +30,20 @@ const FacultyTimetableList = (props) => {
               <Typography sx={{ fontSize: 'small' }}>
                 {timetable.faculty?.firstname} {timetable.faculty?.lastname}
               </Typography>
-            </div>            
+            </div>
             <div className="col" style={{ marginRight: '10px', textAlign: 'right' }}>
-              <IconButton onClick={() => { }}>
+              <IconButton onClick={() => {
+                dispatch(selectTimetable(timetable));
+                dispatch(openEdit());
+              }}>
                 <Icon>
                   <EditRoundedIcon color="secondary" />
                 </Icon>
               </IconButton>
-              <IconButton onClick={() => { }}>
+              <IconButton onClick={() => {
+                dispatch(selectTimetable(timetable));
+                dispatch(openDeleteModal());
+              }}>
                 <Icon>
                   <DeleteIcon color="error" />
                 </Icon>

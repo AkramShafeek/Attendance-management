@@ -1,0 +1,51 @@
+.list-item {
+  height: 50px;
+  transition: all 100ms ease-in-out;
+}
+
+.list-item:nth-child(even) {
+  background-color: rgb(250, 250, 250);
+}
+
+.list-item:hover {
+  cursor: pointer;
+  background-color: rgb(245, 245, 245);
+}
+
+.header {
+  cursor: auto;
+  height: 80px;
+  background-color: transparent !important;
+}
+
+table,
+tr,
+td {
+  border: none;
+  border-collapse: collapse;
+}
+tr {
+  border-radius: 5px;
+  min-height: 70px;
+}
+
+td {
+  padding: 15px 20px;
+  width: fit-content;
+  min-height: 70px;
+  max-width: 190px;
+  word-wrap: break-word;
+}
+
+td:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+td:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+table.align-cell-text-left td {
+  text-align: left;
+}

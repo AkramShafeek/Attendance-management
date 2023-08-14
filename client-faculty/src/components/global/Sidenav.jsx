@@ -16,17 +16,17 @@ const Sidenav = () => {
     {
       name: "Today's Attendance",
       icon: <CalendarMonthIcon />,
-      link: ''
+      link: 'todayattendance'
     },
     {
       name: "Manage Attendance",
       icon: <Settings />,
-      link: ''
+      link: 'manageattendance'
     },
     {
       name: "My Timetable",
       icon: <CalendarViewWeekIcon />,
-      link: ''
+      link: 'mytimetable'
     },    
   ];
 

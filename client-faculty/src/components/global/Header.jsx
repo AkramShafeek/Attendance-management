@@ -1,10 +1,12 @@
-import { Avatar, Box, Switch, Typography } from "@mui/material"
+import { Avatar, Box, Button, Switch, Typography } from "@mui/material"
 import '../../styles/index.css';
 import { useTheme } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMode } from "../../redux/features/themeSlice";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import BadgeIcon from '@mui/icons-material/Badge';
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -56,18 +58,19 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 const Header = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const mode = useSelector((store) => store.mode.mode);
   return (
     <div className="flex-row f-between pad-1 align-items-center" style={{ 'backgroundColor': palette.background.alt, borderRadius: '10px' }}>
       <div className="flex-row align-items-center">
         <Typography sx={{ padding: '15px 15px', fontWeight: 'bold' }} variant="h4">
-          ADMIN PANEL
+          FACULTY PANEL
         </Typography>
-        <AdminPanelSettingsIcon sx={{ width: '30px', height: '30px' }} color="primary"/>
+        <BadgeIcon sx={{ width: '30px', height: '30px' }} color="primary" /> 
       </div>
       <div className="flex-row align-items-center gap-2">
         <MaterialUISwitch onChange={() => dispatch(toggleMode())} defaultChecked={mode} />
-        < Avatar />
+        <Button variant="outlined" onClick={()=>navigate("/")}>Logout</Button>
       </div>
     </div >
   );

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedMenu: "Calendar"
+  selectedMenu: "Today's Attendance"
 };
 
 const menuSlice = createSlice({

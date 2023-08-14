@@ -9,7 +9,13 @@ import { themeSettings } from './theme';
 import Test from './components/Test';
 import Navigator from './components/utils/Navigator';
 import Home from './pages/Home';
-
+import TodayAttendance from './components/TodayAttendance';
+import ManageAttendance from './components/ManageAttendance';
+import MyTimetable from './components/MyTimetable';
+import './styles/index.css';
+import './styles/list.css';
+import './styles/admin.css';
+import './styles/timetable.css';
 
 function App() {
   const mode = useSelector((store) => store.mode.mode);
@@ -22,7 +28,10 @@ function App() {
           <Route path="/" element={<Authentication />} />
           <Route path="/home" element={<Home />}>
             <Route path="" element={<Navigator />} />            
-            <Route path="test" element={<Test />} />            
+            <Route path="test" element={<Test />} /> 
+            <Route path="todayattendance" element={<TodayAttendance />} />
+            <Route path="manageattendance" element={<ManageAttendance />} />        
+            <Route path="mytimetable" element={<MyTimetable />} />        
           </Route>
         </Routes>
       </ThemeProvider>

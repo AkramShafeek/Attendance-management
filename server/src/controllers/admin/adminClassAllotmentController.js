@@ -100,7 +100,7 @@ const editClassAllotment = async (req, res) => {
   req.body.faculty = facultyReference._id;
   console.log(req.body);
 
-  const classExists = await ClassAllotment.findOne({ $and: [{ class: req.body.class }, { course: req.body.course }, { faculty: req.body.faculty }] });
+  const classExists = await ClassAllotment.findOne({ $and: [{ class: req.body.class }, { course: req.body.course }] });
   if (classExists)
     throw new Error('Given allotment already exists');
 

@@ -15,6 +15,7 @@ const connectToMongo = require('./database/connectToMongo');
 
 // routes
 const adminRouter = require('./routes/adminRoutes');
+const facultyRouter = require('./routes/facultyRoutes');
 
 // head middlewares
 app.use(cors());
@@ -22,6 +23,7 @@ app.use(express.json());
 
 // routes config
 app.use('/api/v1/admin/', adminRouter);
+app.use('/api/v1/faculty/',facultyRouter);
 
 
 app.use('*', (req, res) => {

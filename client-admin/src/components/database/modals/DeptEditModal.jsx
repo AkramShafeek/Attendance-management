@@ -69,7 +69,7 @@ const DeptEditModal = ({ selectedDept, handleClose }) => {
       {isLoading && <LinearProgress sx={{ width: '100%', borderRadius: '10px', margin: '10px 0px' }} color="secondary" />}
       <Collapse in={showStatus} sx={{ width: '100%' }}>
         <Alert color={isSuccess ? "primary" : "error"} severity={isSuccess ? "success" : "error"}>
-          {isSuccess ? 'Edited department successfully' : "errorMsg"}
+          {isSuccess ? 'Edited department successfully' : errorMsg}
         </Alert>
       </Collapse>
       <Formik

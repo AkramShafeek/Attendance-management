@@ -3,8 +3,7 @@ import Header from "../components/global/Header";
 import Sidenav from "../components/global/Sidenav";
 import '../styles/admin.css'
 
-const Home = () => {
-  console.log("I'm mounted i'm home")
+const Home = () => {  
   return (
     <div className="body flex-column gap-1 pad-1" style={{boxSizing: 'border-box',paddingBottom: '25px'}}>
       <Header />

@@ -1,0 +1,113 @@
+.timetable-list-container {
+  margin-top: 15px;
+}
+
+.timetable-list-container .row {
+  padding: 10px 25px;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+}
+
+.timetable-list-container .row .col {
+  flex: 1 0 18%;
+  text-align: left;
+  /* border: 1px solid aliceblue;   */
+}
+
+table.timetable {
+  width: 100%;
+  border-collapse: separate;
+}
+
+table.timetable tr td {
+  border: 1px solid rgb(134, 134, 134);
+  text-align: center;
+}
+
+div.timetable {
+  display: flex;
+  justify-content: center;
+  height: 400px;
+  width: fit-content;
+  max-width: 800px;
+  background-color: rgba(255, 228, 196, 0);
+  /* border: 1px solid rgb(134, 134, 134); */
+  border-radius: 5px;
+  gap: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+div.timetable div.col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+div.col div {
+  border: 1px solid rgb(134, 134, 134);
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 12%;
+  width: 100%;
+  padding: 3px 15px;
+  box-sizing: border-box;
+}
+
+div.col.break div:nth-child(1) {
+  flex: 1 0 13.4%;
+}
+
+div.col.break div:nth-child(2) {
+  flex: 1 0 85%;
+  text-align: center;  
+}
+
+.period-section {
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(245, 245, 220, 0.384); */
+}
+
+div.period {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+}
+div.period:hover{
+  /* background-color: #49d87c; */
+  border: 1px solid #49d87c;
+  color: #49d87c;
+}
+
+div.period:active{
+  background-color: #49d87c;
+  color: white;
+}
+
+div.scale-period {
+  background-color: aquamarine;
+  transition: all 200ms;
+  border: 1px solid green;
+  scale: 3;
+}
+
+.scale-down {
+  transition: all 200ms;
+  width: 200px;
+  scale: 0.8;
+}
+
+div.display-none {
+  display: none;
+  width: fit-content;
+}

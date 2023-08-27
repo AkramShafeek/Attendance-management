@@ -1,15 +1,24 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Radio, Typography } from "@mui/material";
+import { Avatar, Radio, Typography, Box, FormControl, RadioGroup, FormControlLabel } from "@mui/material";
+import { useImperativeHandle } from "react";
+import { forwardRef } from "react";
 import { useEffect, useState } from "react";
 
-const StudentsAttendance = ({ students }) => {
+const StudentsAttendance = forwardRef(({ students }, ref) => {
   const [attendanceData, setAttendanceData] = useState(null);
-  const [selectedValue, setSelectedValue] = useState('a');
+  const [selectedValue, setSelectedValue] = useState('');
+
+  useImperativeHandle(ref, () => ({
+    getAttendanceData() {
+      return attendanceData;
+    }
+  }));
 
   const handleChange = (event) => {
-    console.log(event.target.value);
-    const currStatus = attendanceData[event.target.value].isPresent;
-    setAttendanceData({ ...attendanceData, [event.target.value]: { isPresent: !currStatus } });
+    const [studentId, isPresent] = event.target.value.split(' ');
+    console.log(studentId, isPresent);
+    setAttendanceData({ ...attendanceData, [studentId]: { isPresent: isPresent === "true" ? true : false } });
+    setSelectedValue(event.target.value);
   };
   useEffect(() => {
     console.log(students);
@@ -43,31 +52,25 @@ const StudentsAttendance = ({ students }) => {
             </Typography>
           </td>
           <td>
-            <Radio
-              checked={attendanceData ? (attendanceData[student._id] ? attendanceData[student._id].isPresent : false) : false}
-              onChange={handleChange}
-              value={student._id}
-              name="radio-buttons"
-              inputProps={{ 'aria-label': 'A' }}
-            />
-            Present
-          </td>
-          <td>
-            <Radio
-              checked={attendanceData ? (attendanceData[student._id] ? !attendanceData[student._id].isPresent : false) : false}
-              onChange={handleChange}
-              color="error"
-              value={student._id}
-              name="radio-buttons"
-              inputProps={{ 'aria-label': 'B' }}
-            />
-            Absent
+            <FormControl sx={{ width: '100%', padding: '0px 0px' }}>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={`${student._id} ${attendanceData?.[student._id]?.isPresent ? "true" : "false"}`}
+                onChange={handleChange}
+                row
+                sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+              >
+                <FormControlLabel value={`${student._id} true`} control={<Radio />} label="Present" />
+                <FormControlLabel value={`${student._id} false`} control={<Radio color="error" />} label="Absent" />
+              </RadioGroup>
+            </FormControl>
           </td>
         </tr>
       )
     })
   )
-}
+})
 
 export default StudentsAttendance;
 

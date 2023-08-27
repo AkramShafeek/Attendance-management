@@ -21,7 +21,8 @@
 table,
 tr,
 td {
-  border: none;
+  /* border: none; */
+  border:'1px solid white';
   border-collapse: collapse;
 }
 tr {

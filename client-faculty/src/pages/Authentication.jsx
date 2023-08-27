@@ -33,7 +33,7 @@ const Authentication = () => {
 
       const response = await loginApi({ email, password });
       console.log(response);
-      dispatch(setUserInfo(response.faculty));
+      dispatch(setUserInfo(response.user));
       dispatch(setToken(response.token));
       navigate("home");
     } catch (error) {

@@ -1,9 +1,9 @@
-import { facultyRootUrl } from "./config"
+import { studentRootUrl } from "./config"
 import axios from "axios";
 
 export const loginApi = async (payload) => {
   try {
-    const url = `${facultyRootUrl}/login`;
+    const url = `${studentRootUrl}/login`;
     const config = {
       headers: {
         'Content-type': 'application/json'

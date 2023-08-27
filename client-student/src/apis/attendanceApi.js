@@ -1,9 +1,9 @@
-import { facultyRootUrl } from "./config"
+import { studentRootUrl } from "./config"
 import axios from "axios";
 
-export const fetchTodayAttendanceApi = async (token) => {
+export const getStudentAttendance = async (token) => {
   try {
-    const url = `${facultyRootUrl}/todayclasses`;
+    const url = `${studentRootUrl}/attendance`;
     const config = {
       headers: {
         'Content-type': 'application/json',
@@ -11,44 +11,6 @@ export const fetchTodayAttendanceApi = async (token) => {
       }
     }
     const response = await axios.get(url, config);
-    return response.data;
-  } catch (error) {
-    console.log(error.response.data)
-    if (error.response.data.msg)
-      throw error.response.data.msg;
-    throw (error.response.data);
-  }
-}
-
-export const fetchStudentsFromClassApi = async(_class, token) => {
-  try {
-    const url = `${facultyRootUrl}/getstudentsfromclass/${_class}`;
-    const config = {
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    }
-    const response = await axios.get(url, config);
-    return response.data;
-  } catch (error) {
-    console.log(error.response.data)
-    if (error.response.data.msg)
-      throw error.response.data.msg;
-    throw (error.response.data);
-  }
-}
-
-export const submitAttendanceApi = async(payload, token) => {
-  try {
-    const url = `${facultyRootUrl}/submitattendance`;
-    const config = {
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    }
-    const response = await axios.post(url, payload, config);
     return response.data;
   } catch (error) {
     console.log(error.response.data)

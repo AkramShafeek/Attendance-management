@@ -33,7 +33,7 @@ const Authentication = () => {
 
       const response = await loginApi({ email, password });
       console.log(response);
-      dispatch(setUserInfo(response.faculty));
+      dispatch(setUserInfo(response.user));
       dispatch(setToken(response.token));
       navigate("home");
     } catch (error) {
@@ -61,7 +61,7 @@ const Authentication = () => {
         alignItems: 'center',
         gap: '15px'
       }}>
-        <h2 style={{ marginBottom: '0px' }}>FACULTY LOGIN</h2>
+        <h2 style={{ marginBottom: '0px' }}>STUDENT LOGIN</h2>
         <Divider sx={{ width: '100%' }} />
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', padding: '45px' }}>
           <TextField label="username" fullWidth value={email} onChange={(event) => setEmail(event.target.value)}></TextField>

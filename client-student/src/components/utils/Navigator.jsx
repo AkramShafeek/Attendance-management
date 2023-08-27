@@ -5,7 +5,7 @@ const Navigator = () => {
   console.log("I'm mounted")
   const navigate = useNavigate();
   useEffect(() => {
-    navigate("todayattendance");
+    navigate("attendance");
   })
   return;
 }

@@ -72,7 +72,7 @@ const Header = () => {
     <div className="flex-row f-between pad-1 align-items-center" style={{ 'backgroundColor': palette.background.alt, borderRadius: '10px' }}>
       <div className="flex-row align-items-center">
         <Typography sx={{ padding: '15px 15px', fontWeight: 'bold' }} variant="h4">
-          FACULTY PANEL
+          STUDENT PANEL
         </Typography>
         <BadgeIcon sx={{ width: '30px', height: '30px' }} color="primary" /> 
       </div>

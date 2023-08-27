@@ -9,8 +9,7 @@ import { themeSettings } from './theme';
 import Test from './components/Test';
 import Navigator from './components/utils/Navigator';
 import Home from './pages/Home';
-import TodayAttendance from './components/TodayAttendance';
-import ManageAttendance from './components/ManageAttendance';
+import Attendance from './components/Attendance';
 import MyTimetable from './components/MyTimetable';
 import './styles/index.css';
 import './styles/list.css';
@@ -29,8 +28,7 @@ function App() {
           <Route path="/home" element={<Home />}>
             <Route path="" element={<Navigator />} />            
             <Route path="test" element={<Test />} /> 
-            <Route path="todayattendance" element={<TodayAttendance />} />
-            <Route path="manageattendance" element={<ManageAttendance />} />        
+            <Route path="attendance" element={<Attendance />} />                  
             <Route path="mytimetable" element={<MyTimetable />} />        
           </Route>
         </Routes>

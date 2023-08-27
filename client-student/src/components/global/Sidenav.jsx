@@ -14,15 +14,10 @@ const Sidenav = () => {
   const dispatch = useDispatch();
   const menu = [  
     {
-      name: "Today's Attendance",
+      name: "Attendance",
       icon: <CalendarMonthIcon />,
-      link: 'todayattendance'
-    },
-    {
-      name: "Manage Attendance",
-      icon: <Settings />,
-      link: 'manageattendance'
-    },
+      link: 'attendance'
+    },    
     {
       name: "My Timetable",
       icon: <CalendarViewWeekIcon />,

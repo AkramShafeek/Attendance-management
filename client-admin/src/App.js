@@ -27,7 +27,7 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<Authentication />} />
-          <Route path="/admin" element={<Admin />}>
+          <Route path="/home" element={<Admin />}>
             <Route path="" element={<Navigator />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="database" element={<Database />} />

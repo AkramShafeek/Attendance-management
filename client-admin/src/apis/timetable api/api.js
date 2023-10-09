@@ -34,6 +34,7 @@ export const createApi = async (payload) => {
 }
 
 export const editApi = async (payload) => {
+  console.log(payload)
   try {
     const url = `${adminRootUrl}/timetable/update`;
     const config = {

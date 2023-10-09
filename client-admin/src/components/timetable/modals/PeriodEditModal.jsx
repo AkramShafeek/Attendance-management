@@ -57,8 +57,8 @@ const PeriodEditModal = ({ selectedPeriod, handleClose }) => {
     faculty: selectedPeriod.faculty
   }
   const validateSchema = yup.object().shape({
-    timetable: yup.string().required("required"),
-    classAllotment: yup.string().required("required")
+    // timetable: yup.string().required("required"),
+    // classAllotment: yup.string().required("required")
   });
   useEffect(() => {
     console.log(selectedPeriod);
@@ -66,7 +66,7 @@ const PeriodEditModal = ({ selectedPeriod, handleClose }) => {
   }, []);
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    console.log(values);    
     var timeout;
     try {
       timeout = setTimeout(() => setIsLoading(true), 1000);

@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./features/userSlice";
 import menuReducer from "./features/menuSlice";
 import studentReducer from "./features/studentSlice";
 import facultyReducer from "./features/facultySlice";
@@ -23,6 +24,7 @@ import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 
 const reducers = combineReducers({
+  user: userReducer,
   menu: menuReducer,
   student: studentReducer,
   faculty: facultyReducer,

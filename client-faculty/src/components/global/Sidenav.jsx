@@ -18,16 +18,16 @@ const Sidenav = () => {
       icon: <CalendarMonthIcon />,
       link: 'todayattendance'
     },
-    {
-      name: "Manage Attendance",
-      icon: <Settings />,
-      link: 'manageattendance'
-    },
-    {
-      name: "My Timetable",
-      icon: <CalendarViewWeekIcon />,
-      link: 'mytimetable'
-    },    
+    // {
+    //   name: "Manage Attendance",
+    //   icon: <Settings />,
+    //   link: 'manageattendance'
+    // },
+    // {
+    //   name: "My Timetable",
+    //   icon: <CalendarViewWeekIcon />,
+    //   link: 'mytimetable'
+    // },    
   ];
 
   const dispatchMenuSelection = (element) => {

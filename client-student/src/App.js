@@ -20,7 +20,7 @@ function App() {
   const mode = useSelector((store) => store.mode.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode ? 'dark' : 'light')), [mode]);
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={"/student"}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes>
